@@ -5,9 +5,6 @@
 #  'de' -> German translations.
 module-language: en
 # Here you can enable and disable individual modules. Please note that any changes will require a server restart.
-enable-modules:
-  # The bank module is the bank system for LightEconomy. Players can deposit and withdraw money from banks.
-  bank: true
 default-currency:
   # Start Balance if the player comes new to the server.
   start-balance: 200.00
