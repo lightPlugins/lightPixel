@@ -2,6 +2,7 @@ package io.lightplugins.economy.eco.implementer.vaulty;
 
 import io.lightplugins.economy.LightEconomy;
 import io.lightplugins.economy.eco.LightEco;
+import io.lightplugins.light.api.util.NumberFormatter;
 import io.lightplugins.vaulty.api.economy.VaultyEconomy;
 import io.lightplugins.vaulty.api.economy.VaultyResponse;
 import org.bukkit.Bukkit;
@@ -80,7 +81,7 @@ public class VaultyImplementer implements VaultyEconomy {
 
     @Override
     public CompletableFuture<Boolean> createPlayerAccountAsync(UUID uuid) {
-        return null;
+        return LightEco.instance.getQueryManager().prepareNewAccount(uuid);
     }
 
 
@@ -91,47 +92,104 @@ public class VaultyImplementer implements VaultyEconomy {
 
     @Override
     public CompletableFuture<Boolean> hasAccountAsync(UUID uuid) {
-        return null;
+        return LightEco.instance.getQueryManager().getAccountHolder(uuid)
+                .thenApplyAsync(accountHolder -> accountHolder != null);
     }
 
     @Override
     public BigDecimal getBalance(UUID uuid) {
-        return null;
+        return getBalanceAsync(uuid).join();
     }
 
     @Override
     public CompletableFuture<BigDecimal> getBalanceAsync(UUID uuid) {
-        return null;
+        return LightEco.instance.getQueryManager().getAccountHolder(uuid)
+                .thenApplyAsync(accountHolder -> {
+                    if (accountHolder == null) {
+                        return BigDecimal.ZERO;
+                    }
+                    return accountHolder.getBalance();
+                });
     }
 
     @Override
-    public BigDecimal has(UUID uuid, BigDecimal bigDecimal) {
-        return null;
+    public boolean has(UUID uuid, BigDecimal bigDecimal) {
+        return hasAsync(uuid, bigDecimal).join();
     }
 
     @Override
-    public CompletableFuture<BigDecimal> hasAsync(UUID uuid, BigDecimal bigDecimal) {
-        return null;
+    public CompletableFuture<Boolean> hasAsync(UUID uuid, BigDecimal bigDecimal) {
+        return LightEco.instance.getQueryManager().getAccountHolder(uuid)
+                .thenApplyAsync(accountHolder -> {
+                    if (accountHolder == null) {
+                        return false;
+                    }
+                    return accountHolder.getFormattedBalance() >= NumberFormatter.formatDouble(accountHolder.getBalance());
+                });
     }
 
-    @Override
     public VaultyResponse withdrawPlayer(UUID uuid, BigDecimal bigDecimal) {
-        return null;
+        return withdrawPlayerAsync(uuid, bigDecimal).join();
     }
 
     @Override
     public CompletableFuture<VaultyResponse> withdrawPlayerAsync(UUID uuid, BigDecimal bigDecimal) {
-        return null;
+        CompletableFuture<Boolean> hasAccountFuture = hasAccountAsync(uuid);
+
+        return hasAccountFuture.thenComposeAsync(hasAccount -> {
+            if (!hasAccount) {
+                return CompletableFuture.completedFuture(new VaultyResponse(0, 0,
+                        VaultyResponse.ResponseType.FAILURE, "[Vaulty] Account does not exist"));
+            }
+
+            CompletableFuture<Boolean> hasBalanceFuture = hasAsync(uuid, bigDecimal);
+            return hasBalanceFuture.thenComposeAsync(hasBalance -> {
+                if (!hasBalance) {
+                    return CompletableFuture.completedFuture(new VaultyResponse(0, 0,
+                            VaultyResponse.ResponseType.FAILURE, "[Vaulty] Insufficient funds"));
+                }
+
+                return LightEco.instance.getQueryManager().withdrawFromAccount(uuid, bigDecimal)
+                        .thenApplyAsync(rowsUpdated -> {
+                            if (rowsUpdated) {
+                                return new VaultyResponse(0, 0, VaultyResponse.ResponseType.SUCCESS,
+                                        "[Vaulty] Withdrawn successfully");
+                            } else {
+                                return new VaultyResponse(0, 0, VaultyResponse.ResponseType.FAILURE,
+                                        "[Vaulty] Withdrawn failed");
+                            }
+                        });
+            });
+        });
     }
 
     @Override
     public VaultyResponse depositPlayer(UUID uuid, BigDecimal bigDecimal) {
-        return null;
+        return depositPlayerAsync(uuid, bigDecimal).join();
     }
 
     @Override
     public CompletableFuture<VaultyResponse> depositPlayerAsync(UUID uuid, BigDecimal bigDecimal) {
-        return null;
+
+        CompletableFuture<Boolean> hasAccountFuture = hasAccountAsync(uuid);
+
+        return hasAccountFuture.thenComposeAsync(hasAccount -> {
+            if (!hasAccount) {
+                return CompletableFuture.completedFuture(new VaultyResponse(0, 0,
+                        VaultyResponse.ResponseType.FAILURE, "[Vaulty] Account does not exist"));
+            }
+
+            return LightEco.instance.getQueryManager().depositFromAccount(uuid, bigDecimal)
+                    .thenApplyAsync(rowsUpdated -> {
+                        if (rowsUpdated) {
+                            return new VaultyResponse(0, 0, VaultyResponse.ResponseType.SUCCESS,
+                                    "[Vaulty] Deposit successfully");
+                        } else {
+                            return new VaultyResponse(0, 0, VaultyResponse.ResponseType.FAILURE,
+                                    "[Vaulty] Deposit failed");
+                        }
+                    });
+        });
     }
 
     @Override

@@ -5,6 +5,7 @@ import io.lightplugins.economy.eco.config.SettingParams;
 import io.lightplugins.economy.eco.implementer.events.CreatePlayerOnJoin;
 import io.lightplugins.economy.eco.implementer.vault.VaultImplementer;
 import io.lightplugins.economy.eco.implementer.vaulty.VaultyImplementer;
+import io.lightplugins.economy.eco.interfaces.AccountHolder;
 import io.lightplugins.economy.eco.manager.QueryManager;
 import io.lightplugins.light.api.LightModule;
 import io.lightplugins.light.api.commands.SubCommand;
@@ -17,6 +18,9 @@ import org.bukkit.plugin.ServicePriority;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 public class LightEco implements LightModule {
@@ -67,11 +71,10 @@ public class LightEco implements LightModule {
         hookVault();
 
         if(!initDatabase()) {
-            LightEconomy.api.getDebugPrinting().print("Failed to initialize database from LightAPI");
+            LightEconomy.api.getDebugPrinting().print("§4Failed to initialize start sequence while enabling module §c" + this.moduleName);
             disable();
         }
 
-        queryManager.createEcoTable();
 
         registerEvents();
         RegisteredServiceProvider<VaultyEconomy> vaultyRSP =
@@ -160,6 +163,7 @@ public class LightEco implements LightModule {
     private boolean initDatabase() {
         try {
             this.queryManager = new QueryManager(LightEconomy.api.getConnection());
+            queryManager.createEcoTable();
             return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);

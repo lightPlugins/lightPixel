@@ -65,6 +65,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.lightPlugins</groupId>
+            <artifactId>Vaulty</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
@@ -84,15 +90,7 @@
             <artifactId>light</artifactId>
             <version>0.0.1</version>
             <scope>system</scope>
-            <systemPath>C:/Users/phili/Documents/lightEconomy-v6/lighteco-dev-server/plugins/light-0.0.1-SNAPSHOT.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>io.lightplugins.vaulty</groupId>
-            <artifactId>vaulty</artifactId>
-            <version>0.1.0</version>
-            <scope>system</scope>
-            <systemPath>C:/Users/phili/Documents/Vaulty-ult/vaulty-dev-server/plugins/Vaulty-0.1.0-SNAPSHOT.jar</systemPath>
+            <systemPath>C:/Users/Philipp/IdeaProjects/lightEconomy-v6/lighteco-dev-server/plugins/light-0.0.1-SNAPSHOT.jar</systemPath>
         </dependency>
 
     </dependencies>

@@ -1,6 +1,7 @@
 package io.lightplugins.economy.eco.config;
 
 import io.lightplugins.economy.eco.LightEco;
+import io.lightplugins.light.api.util.NumberFormatter;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -8,7 +9,6 @@ import java.text.SimpleDateFormat;
 public class SettingParams {
 
     private final LightEco lightEco;
-
     private final String defaultCurrency = "default-currency.";
 
     public SettingParams(LightEco lightEco) {
@@ -42,7 +42,7 @@ public class SettingParams {
     public class DefaultCurrency {
         public BigDecimal getStartBalance() {
             double startBalance = lightEco.getSettings().getConfig().getDouble(defaultCurrency + "start-balance");
-            return BigDecimal.valueOf(startBalance);
+            return NumberFormatter.formatBigDecimal(BigDecimal.valueOf(startBalance));
         }
         public boolean firstJoinMessageEnabled() {
             return lightEco.getSettings().getConfig().getBoolean(defaultCurrency + "enable-first-join-message");
