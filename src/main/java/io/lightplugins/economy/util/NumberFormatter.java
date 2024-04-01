@@ -2,6 +2,7 @@ package io.lightplugins.economy.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class NumberFormatter {
 
@@ -15,6 +16,11 @@ public class NumberFormatter {
 
     public static BigDecimal convertToBigDecimal(double d) {
         return formatBigDecimal(BigDecimal.valueOf(d));
+    }
+
+    public static String formatForMessages(BigDecimal amount) {
+        DecimalFormat formatter = new DecimalFormat("#,##0");
+        return new BigDecimal(formatter.format(amount)).toString();
     }
 
     public static boolean isNumber(String s) {
@@ -33,7 +39,7 @@ public class NumberFormatter {
     public static BigDecimal parseMoney(String amount) {
         try {
             if (amount.matches("^\\d+$")) {
-                return new BigDecimal(amount);
+                return formatBigDecimal(new BigDecimal(amount));
             }
 
             BigDecimal multiplier = BigDecimal.ONE;

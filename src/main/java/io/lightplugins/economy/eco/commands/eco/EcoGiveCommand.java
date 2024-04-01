@@ -105,7 +105,7 @@ public class EcoGiveCommand extends SubCommand {
                     if(depositResult.transactionSuccess()) {
                         LightEconomy.getMessageSender().sendPlayerMessage(LightEco.getMessageParams().depositSuccess()
                                 .replace("#player#", target.getName())
-                                .replace("#amount#", bg.toString()), player);
+                                .replace("#amount#", NumberFormatter.formatForMessages(bg)), player);
                         return;
                     }
                     LightEconomy.getMessageSender().sendPlayerMessage(LightEco.getMessageParams().depositFailed()
