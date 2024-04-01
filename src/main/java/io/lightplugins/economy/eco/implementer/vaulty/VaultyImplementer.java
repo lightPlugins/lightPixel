@@ -2,20 +2,16 @@ package io.lightplugins.economy.eco.implementer.vaulty;
 
 import io.lightplugins.economy.LightEconomy;
 import io.lightplugins.economy.eco.LightEco;
-import io.lightplugins.light.api.util.NumberFormatter;
+import io.lightplugins.economy.util.NumberFormatter;
 import io.lightplugins.vaulty.api.economy.VaultyEconomy;
 import io.lightplugins.vaulty.api.economy.VaultyResponse;
-import org.bukkit.Bukkit;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
-import java.util.logging.Level;
 
 public class VaultyImplementer implements VaultyEconomy {
 
@@ -81,7 +77,13 @@ public class VaultyImplementer implements VaultyEconomy {
 
     @Override
     public CompletableFuture<Boolean> createPlayerAccountAsync(UUID uuid) {
-        return LightEco.instance.getQueryManager().prepareNewAccount(uuid);
+        return hasAccountAsync(uuid).thenApplyAsync(hasAccount -> {
+            if (hasAccount) {
+                //LightEconomy.getDebugPrinting().print("Already has account for " + uuid);
+                return false;
+            }
+            return LightEco.instance.getQueryManager().prepareNewAccount(uuid, false).join();
+        });
     }
 
 
@@ -93,7 +95,11 @@ public class VaultyImplementer implements VaultyEconomy {
     @Override
     public CompletableFuture<Boolean> hasAccountAsync(UUID uuid) {
         return LightEco.instance.getQueryManager().getAccountHolder(uuid)
-                .thenApplyAsync(accountHolder -> accountHolder != null);
+                .thenApplyAsync(accountHolder -> accountHolder != null)
+                .exceptionally(ex -> {
+                    ex.printStackTrace();
+                    return false;
+                });
     }
 
     @Override
@@ -106,8 +112,10 @@ public class VaultyImplementer implements VaultyEconomy {
         return LightEco.instance.getQueryManager().getAccountHolder(uuid)
                 .thenApplyAsync(accountHolder -> {
                     if (accountHolder == null) {
+                        LightEconomy.getDebugPrinting().print("VAULTY: No account found for " + uuid);
                         return BigDecimal.ZERO;
                     }
+                    LightEconomy.getDebugPrinting().print("VAULTY: " + accountHolder.getFormattedBalance());
                     return accountHolder.getBalance();
                 });
     }
@@ -124,6 +132,8 @@ public class VaultyImplementer implements VaultyEconomy {
                     if (accountHolder == null) {
                         return false;
                     }
+                    LightEconomy.getDebugPrinting().print("VAULTY: checking has for Player account with uuid " + uuid);
+                    LightEconomy.getDebugPrinting().print("VAULTY: " + accountHolder.getFormattedBalance() + " >= " + NumberFormatter.formatDouble(accountHolder.getBalance()));
                     return accountHolder.getFormattedBalance() >= NumberFormatter.formatDouble(accountHolder.getBalance());
                 });
     }

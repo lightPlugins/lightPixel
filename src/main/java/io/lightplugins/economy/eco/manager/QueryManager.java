@@ -2,16 +2,23 @@ package io.lightplugins.economy.eco.manager;
 
 //  999.999.999.999.999.999.999.999.999.999.999.999.999.999.999.999.999,99 -> max value for the database for NUMERIC(32, 2)
 
+import io.lightplugins.economy.LightEconomy;
 import io.lightplugins.economy.eco.LightEco;
 import io.lightplugins.economy.eco.interfaces.AccountHolder;
-import io.lightplugins.light.api.database.SQLDatabase;
-import io.lightplugins.light.api.util.NumberFormatter;
+import io.lightplugins.economy.util.NumberFormatter;
+import io.lightplugins.economy.util.database.SQLDatabase;
+import org.bukkit.Bukkit;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
 
 public class QueryManager {
 
@@ -32,11 +39,11 @@ public class QueryManager {
         database.executeSql(query);
     }
 
-    public CompletableFuture<Boolean> prepareNewAccount(UUID uuid) {
+    public CompletableFuture<Boolean> prepareNewAccount(UUID uuid, boolean withStartBalance) {
         BigDecimal startBalance = LightEco.instance.getSettingParams().defaultCurrency().getStartBalance();
         String query = "INSERT INTO " + tableName + "(uuid, balance) VALUES (?,?)";
 
-        return database.executeSqlFuture(query, uuid.toString(), startBalance)
+        return database.executeSqlFuture(query, uuid.toString(), withStartBalance ? startBalance : 0.0)
                 .thenApplyAsync(result -> result > 0)
                 .exceptionally(ex -> {
                     throw new RuntimeException("Failed to prepare new account for UUID: " + uuid, ex);
@@ -44,29 +51,38 @@ public class QueryManager {
     }
 
     public CompletableFuture<AccountHolder> getAccountHolder(UUID uuid) {
-        String query = "SELECT * FROM " + tableName + " WHERE uuid = ?";
+        String sql = "SELECT * FROM " + tableName + " WHERE uuid = ?";
 
-        return database.executeQueryAsync(query, uuid.toString())
-                .thenApplyAsync(resultSet -> {
-                    if (resultSet == null) {
-                        return null;
-                    }
+        CompletableFuture<AccountHolder> future = new CompletableFuture<>();
 
-                    try {
-                        if (resultSet.next()) {
-                            double balance = resultSet.getDouble("balance");
-                            AccountHolder accountHolder = new AccountHolder();
-                            accountHolder.setUuid(uuid);
-                            accountHolder.setBalance(NumberFormatter.formatBigDecimal(BigDecimal.valueOf(balance)));
-                            return accountHolder;
-                        } else {
-                            return null;
-                        }
-                    } catch (SQLException e) {
-                        throw new RuntimeException("Error while processing result set", e);
-                    }
-                });
+        try (
+                Connection c = database.getConnection();
+                PreparedStatement statement = database.prepareStatement(c, sql, uuid.toString());
+                ResultSet set = statement.executeQuery()) {
+
+            if (set.next()) {
+                double balance = set.getDouble("balance");
+                AccountHolder accountHolder = new AccountHolder();
+                accountHolder.setUuid(uuid);
+                accountHolder.setBalance(NumberFormatter.formatBigDecimal(BigDecimal.valueOf(balance)));
+                //LightEconomy.getDebugPrinting().print("Found account holder for " + uuid + " with balance " + balance);
+                future.complete(accountHolder);
+            } else {
+                //LightEconomy.getDebugPrinting().print("No account holder found for uuid " + uuid);
+                future.complete(null);
+            }
+
+            //LightEconomy.getDebugPrinting().print("Query executed: " + sql);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            future.completeExceptionally(e);
+            throw new RuntimeException("[Light] Could not execute SQL statement", e);
+        }
+
+        return future;
     }
+
 
     public CompletableFuture<Integer> setBalanceFromAccount(UUID uuid, BigDecimal balance) {
         String sql = "UPDATE " + tableName + " SET balance = ? WHERE uuid = ?";
@@ -84,4 +100,6 @@ public class QueryManager {
         return database.executeSqlFuture(sql, amount, uuid.toString())
                 .thenApplyAsync(rowsUpdated -> rowsUpdated > 0);
     }
+
+
 }

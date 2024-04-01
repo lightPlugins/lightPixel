@@ -17,6 +17,12 @@
               <goal>shade</goal>
             </goals>
             <configuration>
+              <relocations>
+                <relocation>
+                  <pattern>com.zaxxer.hikari</pattern>
+                  <shadedPattern>io.lightplugins.economy.util.database.hikari</shadedPattern>
+                </relocation>
+              </relocations>
               <outputFile>./lighteco-dev-server/plugins/${project.artifactId}-${project.version}-SNAPSHOT.jar</outputFile>
               <filters>
                 <filter>
@@ -64,9 +70,17 @@
       <url>https://repo.dmulloy2.net/nexus/repository/public/</url>
     </repository>
     <repository>
+      <id>placeholderapi</id>
+      <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+    </repository>
+    <repository>
       <id>citizens-repo</id>
       <name>Citizens Repository</name>
       <url>https://maven.citizensnpcs.co/repo</url>
+    </repository>
+    <repository>
+      <id>glaremasters repo</id>
+      <url>https://repo.glaremasters.me/repository/towny/</url>
     </repository>
   </repositories>
   <dependencies>
@@ -77,9 +91,39 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>org.mariadb.jdbc</groupId>
+      <artifactId>mariadb-java-client</artifactId>
+      <version>3.3.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>com.github.MilkBowl</groupId>
       <artifactId>VaultAPI</artifactId>
       <version>1.7</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>me.clip</groupId>
+      <artifactId>placeholderapi</artifactId>
+      <version>2.11.5</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.kyori</groupId>
+      <artifactId>adventure-api</artifactId>
+      <version>4.16.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.kyori</groupId>
+      <artifactId>adventure-text-minimessage</artifactId>
+      <version>4.16.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>me.lucko</groupId>
+      <artifactId>helper</artifactId>
+      <version>5.6.13</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -89,18 +133,10 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.lightplugins</groupId>
-      <artifactId>light</artifactId>
-      <version>0.0.1</version>
-      <scope>system</scope>
-      <systemPath>C:/Users/phili/Documents/lightEconomy-v6/lighteco-dev-server/plugins/light-0.0.1-SNAPSHOT.jar</systemPath>
-    </dependency>
-    <dependency>
-      <groupId>io.lightplugins.vaulty</groupId>
-      <artifactId>vaulty</artifactId>
-      <version>0.1.0</version>
-      <scope>system</scope>
-      <systemPath>C:/Users/phili/Documents/Vaulty-ult/vaulty-dev-server/plugins/Vaulty-0.1.0-SNAPSHOT.jar</systemPath>
+      <groupId>com.palmergames.bukkit.towny</groupId>
+      <artifactId>towny</artifactId>
+      <version>0.100.1.0</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
   <properties>

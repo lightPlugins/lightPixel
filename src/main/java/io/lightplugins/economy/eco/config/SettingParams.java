@@ -1,7 +1,7 @@
 package io.lightplugins.economy.eco.config;
 
 import io.lightplugins.economy.eco.LightEco;
-import io.lightplugins.light.api.util.NumberFormatter;
+import io.lightplugins.economy.util.NumberFormatter;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;

@@ -2,9 +2,8 @@ package io.lightplugins.economy.eco.implementer.vault;
 
 import io.lightplugins.economy.LightEconomy;
 import io.lightplugins.economy.eco.LightEco;
-import io.lightplugins.light.Light;
-import io.lightplugins.light.api.util.CheckForTownyUUID;
-import io.lightplugins.light.api.util.NumberFormatter;
+import io.lightplugins.economy.util.CheckForTownyUUID;
+import io.lightplugins.economy.util.NumberFormatter;
 import io.lightplugins.vaulty.api.economy.VaultyResponse;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -57,7 +56,7 @@ public class VaultImplementer implements Economy {
         OfflinePlayer offlinePlayer = Bukkit.getPlayer(s);
 
         if(offlinePlayer == null) {
-            if(Light.isTowny) {
+            if(LightEconomy.isTowny) {
                 uuid = CheckForTownyUUID.getTownyUUID(s);
 
                 if(uuid == null) {
@@ -93,18 +92,21 @@ public class VaultImplementer implements Economy {
         OfflinePlayer offlinePlayer = Bukkit.getPlayer(s);
 
         if(offlinePlayer == null) {
-            if(Light.isTowny) {
+            if(LightEconomy.isTowny) {
                 uuid = CheckForTownyUUID.getTownyUUID(s);
 
                 if(uuid == null) {
                     return 0;
                 }
 
+                LightEconomy.getDebugPrinting().print("checking getBalance() for Towny account " + s + " and uuid " + uuid);
+
                 return NumberFormatter.formatDouble(LightEco.economyVaultyService.getBalance(uuid));
             }
             return 0;
         }
-
+        LightEconomy.getDebugPrinting().print("checking getBalance() for Player account " + s);
+        LightEconomy.getDebugPrinting().print("result -> " + NumberFormatter.formatDouble(LightEco.economyVaultyService.getBalance(offlinePlayer.getUniqueId())));
         return NumberFormatter.formatDouble(LightEco.economyVaultyService.getBalance(offlinePlayer.getUniqueId()));
     }
 
@@ -129,12 +131,14 @@ public class VaultImplementer implements Economy {
         OfflinePlayer offlinePlayer = Bukkit.getPlayer(s);
 
         if(offlinePlayer == null) {
-            if(Light.isTowny) {
+            if(LightEconomy.isTowny) {
                 uuid = CheckForTownyUUID.getTownyUUID(s);
 
                 if(uuid == null) {
                     return false;
                 }
+
+                LightEconomy.getDebugPrinting().print("checking has() for Towny account " + s + " and uuid " + uuid);
 
                 return LightEco.economyVaultyService.has(uuid, NumberFormatter.convertToBigDecimal(v));
             }
@@ -176,7 +180,7 @@ public class VaultImplementer implements Economy {
         OfflinePlayer offlinePlayer = Bukkit.getPlayer(s);
 
         if(offlinePlayer == null) {
-            if(Light.isTowny) {
+            if(LightEconomy.isTowny) {
                 uuid = CheckForTownyUUID.getTownyUUID(s);
 
                 if(uuid == null) {
@@ -230,7 +234,7 @@ public class VaultImplementer implements Economy {
         OfflinePlayer offlinePlayer = Bukkit.getPlayer(s);
 
         if(offlinePlayer == null) {
-            if(Light.isTowny) {
+            if(LightEconomy.isTowny) {
                 uuid = CheckForTownyUUID.getTownyUUID(s);
 
                 if(uuid == null) {
@@ -340,12 +344,14 @@ public class VaultImplementer implements Economy {
         OfflinePlayer offlinePlayer = Bukkit.getPlayer(s);
 
         if(offlinePlayer == null) {
-            if(Light.isTowny) {
+            if(LightEconomy.isTowny) {
                 uuid = CheckForTownyUUID.getTownyUUID(s);
 
                 if(uuid == null) {
                     return false;
                 }
+
+                LightEconomy.getDebugPrinting().print("Creating Towny account " + s + " for uuid " + uuid);
 
                 return LightEco.economyVaultyService.createPlayerAccount(uuid);
             }

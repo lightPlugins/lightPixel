@@ -1,6 +1,6 @@
 package io.lightplugins.economy.eco.interfaces;
 
-import io.lightplugins.light.api.util.NumberFormatter;
+import io.lightplugins.economy.util.NumberFormatter;
 
 import java.math.BigDecimal;
 import java.util.UUID;

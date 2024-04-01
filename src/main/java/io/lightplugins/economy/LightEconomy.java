@@ -1,31 +1,52 @@
 package io.lightplugins.economy;
 
+import com.zaxxer.hikari.HikariDataSource;
 import io.lightplugins.economy.bank.LightBank;
 import io.lightplugins.economy.eco.LightEco;
-import io.lightplugins.light.Light;
-import io.lightplugins.light.api.LightAPI;
-import io.lightplugins.light.api.LightModule;
-import io.lightplugins.light.api.database.SQLDatabase;
-import io.lightplugins.light.api.files.FileManager;
-import io.lightplugins.light.api.util.MessageSender;
+import io.lightplugins.economy.util.ColorTranslation;
+import io.lightplugins.economy.util.DebugPrinting;
+import io.lightplugins.economy.util.MessageSender;
+import io.lightplugins.economy.util.database.SQLDatabase;
+import io.lightplugins.economy.util.database.impl.MySQLDatabase;
+import io.lightplugins.economy.util.database.impl.SQLiteDatabase;
+import io.lightplugins.economy.util.database.model.ConnectionProperties;
+import io.lightplugins.economy.util.database.model.DatabaseCredentials;
+import io.lightplugins.economy.util.interfaces.LightModule;
+import io.lightplugins.economy.util.manager.FileManager;
+import io.lightplugins.economy.util.manager.MultiFileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.*;
 
 public class LightEconomy extends JavaPlugin {
 
 
     public static LightEconomy instance;
-    public static LightAPI api;
+
     private LightEco lightEco;
     private LightBank lightBank;
+
     private Map<String, LightModule> modules = new HashMap<>();
+
     private static MessageSender messageSender;
+    public static FileManager database;
+    public ColorTranslation colorTranslation;
+    private static DebugPrinting debugPrinting;
+    private SQLDatabase pluginDatabase;
+
+    public static boolean isTowny = false;
+    public static boolean isPlaceholderAPI = false;
+
+    public HikariDataSource ds;
 
     public final static String consolePrefix = "§r[light§eEconomy§r] §r";
 
@@ -35,27 +56,17 @@ public class LightEconomy extends JavaPlugin {
     public void onLoad() {
 
         instance = this;
-
-        if (Bukkit.getPluginManager().getPlugin("light") == null) {
-            Bukkit.getConsoleSender().sendMessage("""
-
-
-                        §4ERROR
-
-                        §cCould not found §4Light\s
-                        §rLighteconomy will §cnot run §rwithout Light. Please download
-                        the latest version of Light\s
-                        §chttps://www.linkToLight.de/\s
-
-
-                    """);
-            onDisable();
-            return;
-        } else {
-            api = Light.api;
-            Bukkit.getConsoleSender().sendMessage(consolePrefix + "Successfully hooked into §eLight");
-        }
+        debugPrinting = new DebugPrinting();
+        colorTranslation = new ColorTranslation();
+        checkForHooks();
         this.modules = new LinkedHashMap<>();
+        database = createNewFile("settings.yml", true);
+
+        if(!this.initDatabase()) {
+            getDebugPrinting().print("§4Could not connect to the database. Please check your database.yml");
+            getDebugPrinting().print("§4LightEconomy is shutting down... ");
+            this.getServer().getPluginManager().disablePlugin(this);
+        }
     }
 
     public void onEnable() {
@@ -72,8 +83,8 @@ public class LightEconomy extends JavaPlugin {
                 "      §rThank you for using lightEconomy. If you came in trouble feel free to join\n" +
                 "      my §eDiscord §rserver: https://discord.gg/G2EuzmSW\n");
 
-        api.getDebugPrinting().print(consolePrefix + "Loading lightEconomy modules...");
-        this.messageSender = new MessageSender();
+        debugPrinting.print("Loading lightEconomy modules...");
+        messageSender = new MessageSender();
         initModules();
         loadModules();
 
@@ -88,6 +99,14 @@ public class LightEconomy extends JavaPlugin {
             iterator.remove();
         }
 
+        if(this.pluginDatabase != null) {
+            SQLDatabase sqlDatabase = this.pluginDatabase;
+            sqlDatabase.close();
+            getDebugPrinting().print("§4Database is closed");
+        }
+
+        super.onDisable();
+
     }
 
     private void loadModules() {
@@ -99,10 +118,10 @@ public class LightEconomy extends JavaPlugin {
 
     private void loadModule(LightModule lightModule, boolean enable) {
         if(lightModule.isEnabled()) {
-            api.getDebugPrinting().print(consolePrefix + "Module §e" + lightModule.getName() + "§r already loaded.");
+            debugPrinting.print("Module §e" + lightModule.getName() + "§r already loaded.");
             return;
         }
-        api.getDebugPrinting().print(consolePrefix + "Module §e" + lightModule.getName() + "§r is" +
+        debugPrinting.print("Module §e" + lightModule.getName() + "§r is" +
                 (enable ? "§a activated" : "§c deactivated"));
         if(enable) { lightModule.enable();  }
 
@@ -113,7 +132,7 @@ public class LightEconomy extends JavaPlugin {
             return;
         }
         lightModule.disable();
-        api.getDebugPrinting().print(consolePrefix + "Successfully unloaded module: §e" + lightModule.getName());
+        debugPrinting.print("Successfully unloaded module: §e" + lightModule.getName());
     }
 
     private void initModules() {
@@ -129,27 +148,115 @@ public class LightEconomy extends JavaPlugin {
 
         return switch (languageName) {
             case "de" -> {
-                api.getDebugPrinting().print(
-                        consolePrefix + "Selected language for module " + moduleName + ": " + languageName);
+                debugPrinting.print(
+                        "Selected language for module " + moduleName + ": " + languageName);
                 yield new FileManager(LightEconomy.instance, moduleName +
                         "/language/de.yml", true);
             }
             case "pl" -> {
-                api.getDebugPrinting().print(
-                        consolePrefix + "Selected language for module " + moduleName + ": " + languageName);
+                debugPrinting.print(
+                        "Selected language for module " + moduleName + ": " + languageName);
                 yield new FileManager(LightEconomy.instance, moduleName +
                         "/language/pl.yml", true);
             }
             default -> {
-                api.getDebugPrinting().print(
-                        consolePrefix + "Selected language for module " + moduleName + ": " + languageName);
+                debugPrinting.print(
+                        "Selected language for module " + moduleName + ": " + languageName);
                 yield new FileManager(LightEconomy.instance, moduleName +
                         "/language/en.yml", true);
             }
         };
     }
 
+    private void checkForHooks() {
+        debugPrinting.print("Checks for third party hooks");
+
+        Plugin plugin = Bukkit.getPluginManager().getPlugin("Towny");
+        if (plugin != null) {
+            if(!plugin.getDescription().getVersion().equals("0.100.1.0")) {
+                Bukkit.getConsoleSender().sendMessage(
+                        "Towny is present but the version §e"
+                                + plugin.getDescription().getVersion() +
+                                "§r is not supported. Please update to version §e0.100.1.0 or higher");
+            } else {
+                getDebugPrinting().print("Towny is present and supported. Hooking into Towny");
+                isTowny = true;
+            }
+
+        }
+
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            Bukkit.getConsoleSender().sendMessage("PlaceholderAPI is present and supported. Hooking into PlaceholderAPI");
+            isPlaceholderAPI = true;
+        }
+
+    }
+
+    private boolean initDatabase() {
+        try {
+            String databaseType = database.getConfig().getString("storage.type");
+            ConnectionProperties connectionProperties = ConnectionProperties.fromConfig(database.getConfig());
+
+            if ("sqlite".equalsIgnoreCase(databaseType)) {
+                this.pluginDatabase = new SQLiteDatabase(this, connectionProperties);
+                getDebugPrinting().print("Using SQLite (local) database.");
+            } else if ("mysql".equalsIgnoreCase(databaseType)) {
+                DatabaseCredentials credentials = DatabaseCredentials.fromConfig(database.getConfig());
+                this.pluginDatabase = new MySQLDatabase(this, credentials, connectionProperties);
+                getDebugPrinting().print("Using MySQL (remote*) database.");
+            } else {
+                this.getLogger().warning(String.format("Error! Unknown database type: %s. Disabling plugin.", databaseType));
+                this.getServer().getPluginManager().disablePlugin(this);
+                return false;
+            }
+
+            this.pluginDatabase.connect();
+        } catch (Exception e) {
+            this.getLogger().warning("Could not maintain Database Connection. Disabling plugin.");
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @NotNull
+    public List<FileConfiguration> getFileConfigs(String path) throws IOException {
+
+        final List<FileConfiguration> fileConfigs = new ArrayList<>();
+
+        getMultiFiles(path).forEach(singleFile -> {
+            FileConfiguration cfg = YamlConfiguration.loadConfiguration(singleFile);
+            fileConfigs.add(cfg);
+        });
+
+        return fileConfigs;
+    }
+
+    @NotNull
+    public List<File> getMultiFiles(String path) throws IOException {
+        // Add files from the MultiFileManager to the existing files list
+        return new ArrayList<>(readMultiFiles(path).getYamlFiles());
+    }
+
+    @NotNull
+    public MultiFileManager readMultiFiles(String directoryPath) throws IOException {
+        return new MultiFileManager(directoryPath);
+    }
+
+    @NotNull
+    public FileManager createNewFile(String fileName, boolean loadDefaultsOneReload) {
+        return new FileManager(this, fileName, loadDefaultsOneReload);
+    }
+
     public static MessageSender getMessageSender() {
         return messageSender;
+    }
+
+    public static DebugPrinting getDebugPrinting() {
+        return debugPrinting;
+    }
+
+    public SQLDatabase getConnection() {
+        return this.pluginDatabase;
     }
 }

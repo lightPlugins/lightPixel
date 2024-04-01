@@ -2,9 +2,9 @@ package io.lightplugins.economy.bank;
 
 import io.lightplugins.economy.LightEconomy;
 import io.lightplugins.economy.bank.config.SettingParams;
-import io.lightplugins.light.api.LightModule;
-import io.lightplugins.light.api.commands.SubCommand;
-import io.lightplugins.light.api.files.FileManager;
+import io.lightplugins.economy.util.SubCommand;
+import io.lightplugins.economy.util.interfaces.LightModule;
+import io.lightplugins.economy.util.manager.FileManager;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.ArrayList;
@@ -27,21 +27,21 @@ public class LightBank implements LightModule {
 
     @Override
     public void enable() {
-        LightEconomy.api.getDebugPrinting().print(LightEconomy.consolePrefix +
+        LightEconomy.getDebugPrinting().print(LightEconomy.consolePrefix +
                 "Starting " + this.moduleName + " module...");
         instance = this;
-        LightEconomy.api.getDebugPrinting().print(LightEconomy.consolePrefix +
+        LightEconomy.getDebugPrinting().print(LightEconomy.consolePrefix +
                 "Creating default files for module " + this.moduleName + " module...");
         initFiles();
         this.settingParams = new SettingParams(this);
-        LightEconomy.api.getDebugPrinting().print(LightEconomy.consolePrefix +
+        LightEconomy.getDebugPrinting().print(LightEconomy.consolePrefix +
                 "Selecting module language for module " + this.moduleName + "...");
         selectLanguage();
-        LightEconomy.api.getDebugPrinting().print(LightEconomy.consolePrefix +
+        LightEconomy.getDebugPrinting().print(LightEconomy.consolePrefix +
                 "Registering subcommands for module " + this.moduleName + "...");
         initSubCommands();
         this.isModuleEnabled = true;
-        LightEconomy.api.getDebugPrinting().print(LightEconomy.consolePrefix +
+        LightEconomy.getDebugPrinting().print(LightEconomy.consolePrefix +
                 "Successfully started module " + this.moduleName + "!");
 
     }

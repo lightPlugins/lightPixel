@@ -1,7 +1,7 @@
 package io.lightplugins.economy.exceptions;
 
 import io.lightplugins.economy.LightEconomy;
-import io.lightplugins.light.api.LightModule;
+import io.lightplugins.economy.util.interfaces.LightModule;
 
 public class ModuleNotEnabledException extends Exception {
 

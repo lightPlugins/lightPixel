@@ -5,23 +5,17 @@ import io.lightplugins.economy.eco.config.SettingParams;
 import io.lightplugins.economy.eco.implementer.events.CreatePlayerOnJoin;
 import io.lightplugins.economy.eco.implementer.vault.VaultImplementer;
 import io.lightplugins.economy.eco.implementer.vaulty.VaultyImplementer;
-import io.lightplugins.economy.eco.interfaces.AccountHolder;
 import io.lightplugins.economy.eco.manager.QueryManager;
-import io.lightplugins.light.api.LightModule;
-import io.lightplugins.light.api.commands.SubCommand;
-import io.lightplugins.light.api.files.FileManager;
+import io.lightplugins.economy.util.SubCommand;
+import io.lightplugins.economy.util.interfaces.LightModule;
+import io.lightplugins.economy.util.manager.FileManager;
 import io.lightplugins.vaulty.api.economy.VaultyEconomy;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
 
 public class LightEco implements LightModule {
 
@@ -50,28 +44,28 @@ public class LightEco implements LightModule {
 
     @Override
     public void enable() {
-        LightEconomy.api.getDebugPrinting().print(LightEconomy.consolePrefix +
+        LightEconomy.getDebugPrinting().print(
                 "Starting the core module " + this.moduleName);
         instance = this;
-        LightEconomy.api.getDebugPrinting().print(LightEconomy.consolePrefix +
+        LightEconomy.getDebugPrinting().print(
                 "Creating default files for core module " + this.moduleName);
         initFiles();
         this.settingParams = new SettingParams(this);
-        LightEconomy.api.getDebugPrinting().print(LightEconomy.consolePrefix +
+        LightEconomy.getDebugPrinting().print(
                 "Selecting module language for core module " + this.moduleName);
         selectLanguage();
-        LightEconomy.api.getDebugPrinting().print(LightEconomy.consolePrefix +
+        LightEconomy.getDebugPrinting().print(
                 "Registering subcommands for core module " + this.moduleName + "...");
         initSubCommands();
         this.isModuleEnabled = true;
-        LightEconomy.api.getDebugPrinting().print(LightEconomy.consolePrefix +
+        LightEconomy.getDebugPrinting().print(
                 "Successfully started core module " + this.moduleName + "!");
         vaultyImplementer = new VaultyImplementer();
         vaultImplementer = new VaultImplementer();
         hookVault();
 
         if(!initDatabase()) {
-            LightEconomy.api.getDebugPrinting().print("§4Failed to initialize start sequence while enabling module §c" + this.moduleName);
+            LightEconomy.getDebugPrinting().print("§4Failed to initialize start sequence while enabling module §c" + this.moduleName);
             disable();
         }
 
@@ -93,7 +87,7 @@ public class LightEco implements LightModule {
     public void disable() {
         this.isModuleEnabled = false;
         unhookVault();
-        LightEconomy.api.getDebugPrinting().print("Disabled module " + this.moduleName);
+        LightEconomy.getDebugPrinting().print("Disabled module " + this.moduleName);
     }
 
     @Override
@@ -134,10 +128,10 @@ public class LightEco implements LightModule {
         this.vaultyProvider = vaultyImplementer;
         this.vaultProvider = vaultImplementer;
         Bukkit.getServicesManager().register(VaultyEconomy.class, vaultyProvider, LightEconomy.instance, ServicePriority.Highest);
-        Bukkit.getConsoleSender().sendMessage(LightEconomy.consolePrefix +
+        LightEconomy.getDebugPrinting().print(
                 "Vaulty successfully hooked with highest priority into " + LightEconomy.instance.getName());
         Bukkit.getServicesManager().register(Economy.class, this.vaultProvider, LightEconomy.instance, ServicePriority.Highest);
-        Bukkit.getConsoleSender().sendMessage(LightEconomy.consolePrefix +
+        LightEconomy.getDebugPrinting().print(
                 "Vault successfully hooked with highest priority into " + LightEconomy.instance.getName());
 
 
@@ -145,10 +139,10 @@ public class LightEco implements LightModule {
 
     private void unhookVault() {
         Bukkit.getServicesManager().unregister(VaultyEconomy.class, this.vaultyProvider);
-        Bukkit.getConsoleSender().sendMessage(LightEconomy.consolePrefix +
+        Bukkit.getConsoleSender().sendMessage(
                 "Vaulty successfully unhooked from " + LightEconomy.instance.getName());
         Bukkit.getServicesManager().unregister(Economy.class, this.vaultProvider);
-        Bukkit.getConsoleSender().sendMessage(LightEconomy.consolePrefix +
+        Bukkit.getConsoleSender().sendMessage(
                 "Vault successfully unhooked from " + LightEconomy.instance.getName());
     }
 
@@ -161,12 +155,8 @@ public class LightEco implements LightModule {
     }
 
     private boolean initDatabase() {
-        try {
-            this.queryManager = new QueryManager(LightEconomy.api.getConnection());
-            queryManager.createEcoTable();
-            return true;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        this.queryManager = new QueryManager(LightEconomy.instance.getConnection());
+        queryManager.createEcoTable();
+        return true;
     }
 }

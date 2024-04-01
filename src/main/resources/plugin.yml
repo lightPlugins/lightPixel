@@ -3,7 +3,7 @@ author: lightPlugins
 version: 0.1.0
 main: io.lightplugins.economy.LightEconomy
 api-version: 1.17
-depend: [light]
+depend: []
 softdepend: []
 loadbefore: [Essentials, Towny]
 libraries: []
