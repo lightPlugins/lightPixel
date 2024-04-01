@@ -98,7 +98,8 @@ public class LightEco implements LightModule {
 
     @Override
     public void reload() {
-        enable();
+        initFiles();
+        selectLanguage();
     }
 
     @Override

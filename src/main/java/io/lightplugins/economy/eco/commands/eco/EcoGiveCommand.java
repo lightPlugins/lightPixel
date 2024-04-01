@@ -82,19 +82,25 @@ public class EcoGiveCommand extends SubCommand {
         }
 
         if(!NumberFormatter.isNumber(args[2])) {
+            if(!NumberFormatter.isShortNumber(args[2])) {
+                LightEconomy.getMessageSender().sendPlayerMessage(LightEco.getMessageParams().noNumber(), player);
+                return false;
+            }
+        }
+
+        BigDecimal bg = NumberFormatter.parseMoney(args[2]);
+
+        if(bg == null) {
             LightEconomy.getMessageSender().sendPlayerMessage(LightEco.getMessageParams().noNumber(), player);
             return false;
         }
-
-        double amount = Double.parseDouble(args[2]);
-        BigDecimal bg = NumberFormatter.convertToBigDecimal(amount);
 
         if(!NumberFormatter.isPositiveNumber(bg.doubleValue())) {
             LightEconomy.getMessageSender().sendPlayerMessage(LightEco.getMessageParams().onlyPositive(), player);
             return false;
         }
 
-        LightEco.economyVaultyService.depositPlayerAsync(target.getUniqueId(), NumberFormatter.convertToBigDecimal(amount))
+        LightEco.economyVaultyService.depositPlayerAsync(target.getUniqueId(), bg)
                 .thenAcceptAsync(depositResult -> {
                     if(depositResult.transactionSuccess()) {
                         LightEconomy.getMessageSender().sendPlayerMessage(LightEco.getMessageParams().depositSuccess()
