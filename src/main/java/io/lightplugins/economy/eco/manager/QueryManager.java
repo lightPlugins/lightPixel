@@ -2,23 +2,18 @@ package io.lightplugins.economy.eco.manager;
 
 //  999.999.999.999.999.999.999.999.999.999.999.999.999.999.999.999.999,99 -> max value for the database for NUMERIC(32, 2)
 
-import io.lightplugins.economy.LightEconomy;
 import io.lightplugins.economy.eco.LightEco;
 import io.lightplugins.economy.eco.interfaces.AccountHolder;
 import io.lightplugins.economy.util.NumberFormatter;
 import io.lightplugins.economy.util.database.SQLDatabase;
-import org.bukkit.Bukkit;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
 
 public class QueryManager {
 
