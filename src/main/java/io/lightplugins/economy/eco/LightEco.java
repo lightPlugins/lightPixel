@@ -1,6 +1,8 @@
 package io.lightplugins.economy.eco;
 
 import io.lightplugins.economy.LightEconomy;
+import io.lightplugins.economy.eco.commands.eco.EcoGiveCommand;
+import io.lightplugins.economy.eco.config.MessageParams;
 import io.lightplugins.economy.eco.config.SettingParams;
 import io.lightplugins.economy.eco.implementer.events.CreatePlayerOnJoin;
 import io.lightplugins.economy.eco.implementer.vault.VaultImplementer;
@@ -8,10 +10,12 @@ import io.lightplugins.economy.eco.implementer.vaulty.VaultyImplementer;
 import io.lightplugins.economy.eco.manager.QueryManager;
 import io.lightplugins.economy.util.SubCommand;
 import io.lightplugins.economy.util.interfaces.LightModule;
+import io.lightplugins.economy.util.manager.CommandManager;
 import io.lightplugins.economy.util.manager.FileManager;
 import io.lightplugins.vaulty.api.economy.VaultyEconomy;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 
@@ -24,7 +28,7 @@ public class LightEco implements LightModule {
     public Economy economy = null;
     private QueryManager queryManager;
     public static VaultyEconomy economyVaultyService;
-    public static net.milkbowl.vault.economy.Economy economyVaultService;
+    public static Economy economyVaultService;
 
     public final String moduleName = "eco";
     public final String adminPerm = "lighteconomy." + moduleName + ".admin";
@@ -32,6 +36,7 @@ public class LightEco implements LightModule {
     private final ArrayList<SubCommand> subCommands = new ArrayList<>();
 
     private SettingParams settingParams;
+    private static MessageParams messageParams;
 
     public VaultyEconomy vaultyProvider;
     public VaultyImplementer vaultyImplementer;
@@ -54,6 +59,7 @@ public class LightEco implements LightModule {
         LightEconomy.getDebugPrinting().print(
                 "Selecting module language for core module " + this.moduleName);
         selectLanguage();
+        messageParams = new MessageParams(language);
         LightEconomy.getDebugPrinting().print(
                 "Registering subcommands for core module " + this.moduleName + "...");
         initSubCommands();
@@ -119,7 +125,9 @@ public class LightEco implements LightModule {
     }
 
     private void initSubCommands() {
-
+        PluginCommand balanceCommand = Bukkit.getPluginCommand("eco");
+        subCommands.add(new EcoGiveCommand());
+        new CommandManager(balanceCommand, subCommands);
     }
 
     public QueryManager getQueryManager() { return this.queryManager; }
@@ -152,6 +160,10 @@ public class LightEco implements LightModule {
 
     public SettingParams getSettingParams() {
         return settingParams;
+    }
+
+    public static MessageParams getMessageParams() {
+        return messageParams;
     }
 
     private boolean initDatabase() {

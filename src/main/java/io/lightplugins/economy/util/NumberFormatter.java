@@ -16,4 +16,17 @@ public class NumberFormatter {
     public static BigDecimal convertToBigDecimal(double d) {
         return formatBigDecimal(BigDecimal.valueOf(d));
     }
+
+    public static boolean isNumber(String s) {
+        try {
+            Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static boolean isPositiveNumber(double d) {
+        return d > 0;
+    }
 }

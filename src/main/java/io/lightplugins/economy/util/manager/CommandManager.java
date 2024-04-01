@@ -1,6 +1,7 @@
 package io.lightplugins.economy.util.manager;
 
 import io.lightplugins.economy.LightEconomy;
+import io.lightplugins.economy.eco.LightEco;
 import io.lightplugins.economy.util.SubCommand;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -49,16 +50,27 @@ public class CommandManager implements CommandExecutor {
 
             if (args.length > 0) {
                 for (SubCommand subCommand : getSubCommands()) {
-                    if (args[0].equalsIgnoreCase(subCommand.getName())) {
+                    if (subCommand.getName().contains(args[0])) {
 
                         if (sender instanceof Player player) {
                             if(player.hasPermission(subCommand.getPermission())) {
+                                if(args.length != subCommand.maxArgs()) {
+                                    LightEconomy.getMessageSender().sendPlayerMessage(
+                                            LightEco.getMessageParams().wrongSyntax()
+                                                    .replace("#syntax#", subCommand.getSyntax()), player);
+                                    return false;
+                                }
                                 try {
                                     subCommand.performAsPlayer(player, args);
                                     return true;
                                 } catch (ExecutionException | InterruptedException e) {
                                     throw new RuntimeException("Something went wrong in executing " + Arrays.toString(args), e);
                                 }
+                            } else {
+                                LightEconomy.getMessageSender().sendPlayerMessage(
+                                        LightEco.getMessageParams().noPermission()
+                                                .replace("#permission#", subCommand.getPermission()), player);
+                                return false;
                             }
                         }
 
