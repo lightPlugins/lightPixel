@@ -3,14 +3,13 @@ package io.lightplugins.economy.util.manager;
 import io.lightplugins.economy.LightEconomy;
 import io.lightplugins.economy.eco.LightEco;
 import io.lightplugins.economy.util.CompositeTabCompleter;
+import io.lightplugins.economy.util.NumberFormatter;
 import io.lightplugins.economy.util.SubCommand;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class CommandManager implements CommandExecutor {
@@ -24,7 +23,8 @@ public class CommandManager implements CommandExecutor {
     private void registerCommand(PluginCommand command) {
         if (command != null) {
             command.setExecutor(this);
-            List<TabCompleter> tabCompletes = new ArrayList<>();
+            Map<String, TabCompleter> subCommandTabCompleters = new HashMap<>();
+            List<String> ecoSubCommands = new ArrayList<>(); // Liste der Subcommands von /eco
 
             LightEconomy.getDebugPrinting().print(
                     "Successfully registered command " + command.getName());
@@ -32,14 +32,18 @@ public class CommandManager implements CommandExecutor {
             for (SubCommand subCommand : getSubCommands()) {
                 TabCompleter tabCompleter = subCommand.registerTabCompleter();
                 if (tabCompleter != null) {
-                    tabCompletes.add(tabCompleter);
-                    LightEconomy.getDebugPrinting().print(
-                            "Successfully registered tab completer for " + subCommand.getName());
+                    List<String> subCommandNames = subCommand.getName();
+                    for (String subCommandName : subCommandNames) {
+                        subCommandTabCompleters.put(subCommandName, tabCompleter);
+                        ecoSubCommands.add(subCommandName); // Füge den Subcommand-Namen zur Liste hinzu
+                        LightEconomy.getDebugPrinting().print(
+                                "Successfully registered tab completer for " + subCommandName);
+                    }
                 }
             }
 
-            if (!tabCompletes.isEmpty()) {
-                command.setTabCompleter(new CompositeTabCompleter(tabCompletes));
+            if (!subCommandTabCompleters.isEmpty()) {
+                command.setTabCompleter(new CompositeTabCompleter(subCommandTabCompleters, ecoSubCommands));
             }
         }
     }
@@ -92,6 +96,21 @@ public class CommandManager implements CommandExecutor {
                             }
                         }
                     }
+                }
+            }
+
+            if(command.getName().equals("eco")) {
+
+                if(sender instanceof Player player) {
+                    LightEco.economyVaultyService.getBalanceAsync(player.getUniqueId())
+                            .thenAccept(balance -> {
+                                LightEconomy.getMessageSender().sendPlayerMessage(LightEco.getMessageParams().moneyShow()
+                                        .replace("#amount#", NumberFormatter.formatForMessages(balance))
+                                        .replace("#currency#", "$"), player);
+
+                    });
+
+                    return false;
                 }
             }
 

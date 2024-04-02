@@ -14,7 +14,7 @@ public class LightBank implements LightModule {
     public static LightBank instance;
     public boolean isModuleEnabled = false;
 
-    private final String moduleName = "bank";
+    public final String moduleName = "bank";
     public final String adminPerm = "lighteconomy." + moduleName + ".admin";
     public final String tablePrefix = "lightbank_";
     private final ArrayList<SubCommand> subCommands = new ArrayList<>();

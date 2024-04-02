@@ -186,7 +186,7 @@ public class LightEconomy extends JavaPlugin {
         }
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            Bukkit.getConsoleSender().sendMessage("PlaceholderAPI is present and supported. Hooking into PlaceholderAPI");
+            getDebugPrinting().print("PlaceholderAPI is present. Hooking into PlaceholderAPI");
             isPlaceholderAPI = true;
         }
 

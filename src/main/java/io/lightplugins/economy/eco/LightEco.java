@@ -3,6 +3,8 @@ package io.lightplugins.economy.eco;
 import io.lightplugins.economy.LightEconomy;
 import io.lightplugins.economy.eco.commands.eco.EcoGiveCommand;
 import io.lightplugins.economy.eco.commands.eco.EcoRemoveCommand;
+import io.lightplugins.economy.eco.commands.eco.EcoSetCommand;
+import io.lightplugins.economy.eco.commands.main.ReloadCommand;
 import io.lightplugins.economy.eco.config.MessageParams;
 import io.lightplugins.economy.eco.config.SettingParams;
 import io.lightplugins.economy.eco.implementer.events.CreatePlayerOnJoin;
@@ -99,8 +101,12 @@ public class LightEco implements LightModule {
 
     @Override
     public void reload() {
-        initFiles();
+        //initFiles();
+        getSettings().reloadConfig(moduleName + "/settings.yml");
+        LightEconomy.getDebugPrinting().print(moduleName + "/settings.yml");
         selectLanguage();
+        LightEconomy.getDebugPrinting().print(moduleName + "/language/" + settingParams.getModuleLanguage() + ".yml");
+        getLanguage().reloadConfig(moduleName + "/language/" + settingParams.getModuleLanguage() + ".yml");
     }
 
     @Override
@@ -127,10 +133,13 @@ public class LightEco implements LightModule {
     }
 
     private void initSubCommands() {
-        PluginCommand balanceCommand = Bukkit.getPluginCommand("eco");
+        PluginCommand ecoCommand = Bukkit.getPluginCommand("eco");
         subCommands.add(new EcoGiveCommand());
         subCommands.add(new EcoRemoveCommand());
-        new CommandManager(balanceCommand, subCommands);
+        subCommands.add(new EcoSetCommand());
+        subCommands.add(new ReloadCommand());
+        new CommandManager(ecoCommand, subCommands);
+
     }
 
     public QueryManager getQueryManager() { return this.queryManager; }
