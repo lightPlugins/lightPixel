@@ -1,21 +1,15 @@
-name: lightEconomy
+name: lightDummy
 author: lightPlugins
 version: 0.1.0
-main: io.lightplugins.economy.LightEconomy
-api-version: 1.17
+main: io.lightplugins.dummy.Light
+api-version: 1.13
 depend: []
 softdepend: []
-loadbefore: [Essentials, Towny]
+loadbefore: []
 libraries: []
 #  - org.mariadb.jdbc:mariadb-java-client:2.7.4
 #  - com.zaxxer:HikariCP:5.1.0
 commands:
-  lighteconomy:
+  lightdummy:
     description: The root command for lightEconomy overall
-    aliases: [lighteco, le, economy]
-  eco:
-    description: The root command for module [eco]
-    aliases: [money, balance, bal, lighteco]
-  bank:
-    description: The root command for module [bank]
-    aliases: [b, bk, lightbank]
+    aliases: [dummy]

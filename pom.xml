@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.lightplugins.eco</groupId>
-    <artifactId>lightEconomy</artifactId>
+    <groupId>io.lightplugins.dummy</groupId>
+    <artifactId>lightDummy</artifactId>
     <version>0.0.1</version>
 
     <properties>
@@ -169,10 +169,10 @@
                             <relocations>
                                 <relocation>
                                     <pattern>com.zaxxer.hikari</pattern>
-                                    <shadedPattern>io.lightplugins.economy.util.database.hikari</shadedPattern>
+                                    <shadedPattern>io.lightplugins.dummy.util.database.hikari</shadedPattern>
                                 </relocation>
                             </relocations>
-                            <outputFile>./lighteco-dev-server/plugins/${project.artifactId}-${project.version}-SNAPSHOT.jar</outputFile>
+                            <outputFile>./lightdummy-dev-server/plugins/${project.artifactId}-${project.version}-SNAPSHOT.jar</outputFile>
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>
