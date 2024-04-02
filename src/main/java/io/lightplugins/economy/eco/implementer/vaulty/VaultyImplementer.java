@@ -133,8 +133,8 @@ public class VaultyImplementer implements VaultyEconomy {
                         return false;
                     }
                     LightEconomy.getDebugPrinting().print("VAULTY: checking has for Player account with uuid " + uuid);
-                    LightEconomy.getDebugPrinting().print("VAULTY: " + accountHolder.getFormattedBalance() + " >= " + NumberFormatter.formatDouble(accountHolder.getBalance()));
-                    return accountHolder.getFormattedBalance() >= NumberFormatter.formatDouble(accountHolder.getBalance());
+                    LightEconomy.getDebugPrinting().print("VAULTY: " + accountHolder.getFormattedBalance() + " >= " + NumberFormatter.formatDouble(bigDecimal));
+                    return accountHolder.getFormattedBalance() >= NumberFormatter.formatDouble(bigDecimal);
                 });
     }
 

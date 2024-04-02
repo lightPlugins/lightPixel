@@ -2,6 +2,7 @@ package io.lightplugins.economy.eco;
 
 import io.lightplugins.economy.LightEconomy;
 import io.lightplugins.economy.eco.commands.eco.EcoGiveCommand;
+import io.lightplugins.economy.eco.commands.eco.EcoRemoveCommand;
 import io.lightplugins.economy.eco.config.MessageParams;
 import io.lightplugins.economy.eco.config.SettingParams;
 import io.lightplugins.economy.eco.implementer.events.CreatePlayerOnJoin;
@@ -128,6 +129,7 @@ public class LightEco implements LightModule {
     private void initSubCommands() {
         PluginCommand balanceCommand = Bukkit.getPluginCommand("eco");
         subCommands.add(new EcoGiveCommand());
+        subCommands.add(new EcoRemoveCommand());
         new CommandManager(balanceCommand, subCommands);
     }
 

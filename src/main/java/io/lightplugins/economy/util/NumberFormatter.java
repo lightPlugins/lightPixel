@@ -3,11 +3,13 @@ package io.lightplugins.economy.util;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class NumberFormatter {
 
     public static BigDecimal formatBigDecimal(BigDecimal bd) {
-        return bd.setScale(0, RoundingMode.HALF_UP);
+        return bd.setScale(2, RoundingMode.HALF_UP);
     }
 
     public static double formatDouble(BigDecimal bd) {
@@ -18,9 +20,10 @@ public class NumberFormatter {
         return formatBigDecimal(BigDecimal.valueOf(d));
     }
 
-    public static String formatForMessages(BigDecimal amount) {
-        DecimalFormat formatter = new DecimalFormat("#,##0");
-        return new BigDecimal(formatter.format(amount)).toString();
+    public static String formatForMessages(BigDecimal number) {
+        Locale locale = Locale.getDefault();
+        NumberFormat formatter = NumberFormat.getInstance(locale);
+        return formatter.format(number);
     }
 
     public static boolean isNumber(String s) {

@@ -2,6 +2,7 @@ package io.lightplugins.economy.util.manager;
 
 import io.lightplugins.economy.LightEconomy;
 import io.lightplugins.economy.eco.LightEco;
+import io.lightplugins.economy.util.CompositeTabCompleter;
 import io.lightplugins.economy.util.SubCommand;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -9,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class CommandManager implements CommandExecutor {
@@ -22,15 +24,22 @@ public class CommandManager implements CommandExecutor {
     private void registerCommand(PluginCommand command) {
         if (command != null) {
             command.setExecutor(this);
+            List<TabCompleter> tabCompletes = new ArrayList<>();
+
             LightEconomy.getDebugPrinting().print(
                     "Successfully registered command " + command.getName());
+
             for (SubCommand subCommand : getSubCommands()) {
-                if(subCommand.registerTabCompleter() == null) {
-                    continue;
+                TabCompleter tabCompleter = subCommand.registerTabCompleter();
+                if (tabCompleter != null) {
+                    tabCompletes.add(tabCompleter);
+                    LightEconomy.getDebugPrinting().print(
+                            "Successfully registered tab completer for " + subCommand.getName());
                 }
-                command.setTabCompleter(subCommand.registerTabCompleter());
-                LightEconomy.getDebugPrinting().print(
-                        "Successfully registered tab completer for " + command.getName());
+            }
+
+            if (!tabCompletes.isEmpty()) {
+                command.setTabCompleter(new CompositeTabCompleter(tabCompletes));
             }
         }
     }

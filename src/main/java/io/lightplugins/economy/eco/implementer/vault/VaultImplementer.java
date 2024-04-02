@@ -194,7 +194,7 @@ public class VaultImplementer implements Economy {
                     return new EconomyResponse(v, getBalance(s), EconomyResponse.ResponseType.SUCCESS, "");
                 }
                 return new EconomyResponse(v, getBalance(s), EconomyResponse.ResponseType.FAILURE,
-                        "[Vault] Withdrew failed");
+                        vr.errorMessage());
             }
 
             return new EconomyResponse(v, getBalance(s), EconomyResponse.ResponseType.FAILURE,
@@ -248,7 +248,7 @@ public class VaultImplementer implements Economy {
                     return new EconomyResponse(v, getBalance(s), EconomyResponse.ResponseType.SUCCESS, "");
                 }
                 return new EconomyResponse(v, getBalance(s), EconomyResponse.ResponseType.FAILURE,
-                        "[Vault] Deposit failed");
+                        vr.errorMessage());
             }
 
             return new EconomyResponse(v, getBalance(s), EconomyResponse.ResponseType.FAILURE,

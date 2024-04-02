@@ -21,5 +21,7 @@ public class MessageParams {
     public String playerNotFound() { return config.getString("playerNotFound"); }
     public String depositSuccess() { return config.getString("depositSuccess"); }
     public String depositFailed() { return config.getString("depositFailed"); }
+    public String withdrawSuccess() { return config.getString("withdrawSuccess"); }
+    public String withdrawFailed() { return config.getString("withdrawFailed"); }
 
 }

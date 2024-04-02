@@ -16,20 +16,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class EcoGiveCommand extends SubCommand {
+public class EcoRemoveCommand extends SubCommand {
     @Override
     public List<String> getName() {
-        return Arrays.asList("give", "add");
+        return Arrays.asList("remove", "take");
     }
 
     @Override
     public String getDescription() {
-        return "Gives the target player an amount of money.";
+        return "Remove the target player an amount of money.";
     }
 
     @Override
     public String getSyntax() {
-        return "/eco [give,add] <player> <amount>";
+        return "/eco [remove,take] <player> <amount>";
     }
 
     @Override
@@ -39,19 +39,19 @@ public class EcoGiveCommand extends SubCommand {
 
     @Override
     public String getPermission() {
-        return "lighteconomy.eco.command.give";
+        return "lighteconomy.eco.command.remove";
     }
 
     @Override
     public TabCompleter registerTabCompleter() {
-        return (commandSender, command, s, args) -> {
+        return ((commandSender, command, s, args) -> {
 
             if(!commandSender.hasPermission(getPermission())) {
                 return null;
             }
 
             if(args.length == 1) {
-                return Arrays.asList("give", "add");
+                return Arrays.asList("remove", "take");
             }
 
             if (args.length == 2) {
@@ -67,7 +67,7 @@ public class EcoGiveCommand extends SubCommand {
             }
 
             return null;
-        };
+        });
     }
 
     @Override
@@ -99,17 +99,17 @@ public class EcoGiveCommand extends SubCommand {
             return false;
         }
 
-        LightEco.economyVaultyService.depositPlayerAsync(target.getUniqueId(), bg)
-                .thenAcceptAsync(depositResult -> {
-                    if(depositResult.transactionSuccess()) {
-                        LightEconomy.getMessageSender().sendPlayerMessage(LightEco.getMessageParams().depositSuccess()
+        LightEco.economyVaultyService.withdrawPlayerAsync(target.getUniqueId(), bg)
+                .thenAcceptAsync(withdrawResult -> {
+                    if(withdrawResult.transactionSuccess()) {
+                        LightEconomy.getMessageSender().sendPlayerMessage(LightEco.getMessageParams().withdrawSuccess()
                                 .replace("#player#", target.getName())
                                 .replace("#amount#", NumberFormatter.formatForMessages(bg)), player);
                         return;
                     }
-                    LightEconomy.getMessageSender().sendPlayerMessage(LightEco.getMessageParams().depositFailed()
+                    LightEconomy.getMessageSender().sendPlayerMessage(LightEco.getMessageParams().withdrawFailed()
                             .replace("#player#", target.getName())
-                            .replace("#reason#", depositResult.errorMessage())
+                            .replace("#reason#", withdrawResult.errorMessage())
                             .replace("#amount#", NumberFormatter.formatForMessages(bg)), player);
                 });
 

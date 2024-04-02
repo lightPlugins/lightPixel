@@ -37,3 +37,5 @@ onlyPositive: '<red>This is not a positive number! Please use only positive numb
 playerNotFound: '<red>The player <dark_red>#player#<red> could not be found!'
 depositSuccess: '<gray>Successfully deposited <#ffdc73>#amount# <gray>#currency# to <#ffdc73>#player#<gray>.'
 depositFailed: '<red>Failed to deposit <dark_red>#amount# <red>#currency# to <dark_red>#player#<red>. <gray>Reason: <red>#reason#'
+withdrawSuccess: '<gray>Successfully withdrawn <#ffdc73>#amount# <gray>#currency# from <#ffdc73>#player#<gray>.'
+withdrawFailed: '<red>Failed to withdraw <dark_red>#amount# <red>#currency# from <dark_red>#player#<red>. <gray>Reason: <red>#reason#'
