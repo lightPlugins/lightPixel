@@ -1,9 +1,9 @@
-name: lightDummy
+name: lightPixel
 author: lightPlugins
 version: 0.1.0
-main: io.lightplugins.dummy.Light
+main: io.lightplugins.pixel.Light
 api-version: 1.13
-depend: []
+depend: [eco, Vault, PlaceholderAPI, WorldGuard]
 softdepend: []
 loadbefore: []
 libraries: []

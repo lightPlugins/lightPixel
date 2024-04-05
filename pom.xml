@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.lightplugins.dummy</groupId>
-    <artifactId>lightDummy</artifactId>
+    <groupId>io.lightplugins.pixel</groupId>
+    <artifactId>lightPixel</artifactId>
     <version>0.0.1</version>
 
     <properties>
@@ -19,6 +19,11 @@
         <repository>
             <id>bstats-repo</id>
             <url>https://repo.bstats.org/repository/maven-public/</url>
+        </repository>
+
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
         </repository>
 
         <repository>
@@ -47,14 +52,14 @@
         </repository>
 
         <repository>
-            <id>citizens-repo</id>
-            <name>Citizens Repository</name>
-            <url>https://maven.citizensnpcs.co/repo</url>
+            <id>auxilor-repo</id>
+            <url>https://repo.auxilor.io/repository/maven-public/</url>
         </repository>
 
         <repository>
-            <id>glaremasters repo</id>
-            <url>https://repo.glaremasters.me/repository/towny/</url>
+            <id>citizens-repo</id>
+            <name>Citizens Repository</name>
+            <url>https://maven.citizensnpcs.co/repo</url>
         </repository>
 
     </repositories>
@@ -138,17 +143,33 @@
         </dependency>
 
         <dependency>
-            <groupId>com.palmergames.bukkit.towny</groupId>
-            <artifactId>towny</artifactId>
-            <version>0.100.1.0</version>
+            <groupId>com.sk89q.worldguard</groupId>
+            <artifactId>worldguard-bukkit</artifactId>
+            <version>7.0.9-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.willfp</groupId>
+            <artifactId>eco</artifactId>
+            <version>6.69.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.willfp</groupId>
+            <artifactId>EcoSkills</artifactId>
+            <version>3.45.0</version>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.30</version>
             <scope>compile</scope>
         </dependency>
+
 
     </dependencies>
 
@@ -169,10 +190,10 @@
                             <relocations>
                                 <relocation>
                                     <pattern>com.zaxxer.hikari</pattern>
-                                    <shadedPattern>io.lightplugins.dummy.util.database.hikari</shadedPattern>
+                                    <shadedPattern>io.lightplugins.pixel.util.database.hikari</shadedPattern>
                                 </relocation>
                             </relocations>
-                            <outputFile>./lightdummy-dev-server/plugins/${project.artifactId}-${project.version}-SNAPSHOT.jar</outputFile>
+                            <outputFile>./lightpixel-dev-server/plugins/${project.artifactId}-${project.version}-SNAPSHOT.jar</outputFile>
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>
