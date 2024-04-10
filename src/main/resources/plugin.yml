@@ -10,6 +10,6 @@ libraries: []
 #  - org.mariadb.jdbc:mariadb-java-client:2.7.4
 #  - com.zaxxer:HikariCP:5.1.0
 commands:
-  lightdummy:
+  lightpixel:
     description: The root command for lightEconomy overall
     aliases: [dummy]

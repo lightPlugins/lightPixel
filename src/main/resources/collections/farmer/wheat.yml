@@ -1,0 +1,33 @@
+type: mining
+category: farmer
+discovered:
+  display-name: '<#ffdc73>#type# &8| &7Farming Collection &f(Level #collection-level#)'
+  lore:
+    - ''
+    - '<gray>Farm some #type# for this collection.'
+    - '&8• <gray>Farmed: <#ffdc73>#collection-count# <gray>/ <#ffdc73>#collection-by-level#'
+    - '&8• <gray>Progress: #collection-percent-bar#'
+undiscovered:
+  display-name: '<#ffdc73>#type# &8| &cFarming Collection'
+  lore:
+    - ''
+    - '<gray>Search <#ffdc73>#type# <gray>to start this collection.'
+levels:
+  - level: 1
+    args:
+      gui:
+        item: '#type#'
+        displayname: 'Collection Level #level#'
+        lore:
+          - ''
+          - '&8• <gray>Progress: #collection-percent-bar#'
+          - '&8• <gray>Rewards:'
+          - ' <gray>- #rewards#'
+      amount-to-farm: 60
+      level-up-message:
+        - '    &7&m---&#ffdc73●&r&7&m---&r &#ffdc73&lCOLLECTION LEVEL UP &7&m---&#ffdc73●&r&7&m---'
+        - ' '
+        - '  &8● &7You leveled up <#ffdc73>#type# <gray>to level <#ffdc73>#level#'
+        - ' '
+
+

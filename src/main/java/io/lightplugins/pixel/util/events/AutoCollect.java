@@ -16,7 +16,7 @@ import java.util.List;
 
 public class AutoCollect implements Listener {
 
-    @EventHandler
+    //@EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
 
         Player player = event.getPlayer();
@@ -51,7 +51,7 @@ public class AutoCollect implements Listener {
     }
 
 
-    @EventHandler
+    //@EventHandler
     public void onBlockDrops(BlockDropItemEvent event) {
 
         Player player = event.getPlayer();
