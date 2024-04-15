@@ -1,11 +1,15 @@
 package io.lightplugins.pixel.collections;
 
 import io.lightplugins.pixel.Light;
+import io.lightplugins.pixel.collections.commands.OpenCollectionsCommand;
 import io.lightplugins.pixel.collections.config.MessageParams;
 import io.lightplugins.pixel.collections.config.SettingParams;
 import io.lightplugins.pixel.util.SubCommand;
 import io.lightplugins.pixel.util.interfaces.LightModule;
+import io.lightplugins.pixel.util.manager.CommandManager;
 import io.lightplugins.pixel.util.manager.FileManager;
+import org.bukkit.Bukkit;
+import org.bukkit.command.PluginCommand;
 
 import java.util.ArrayList;
 
@@ -23,6 +27,7 @@ public class LightCollections implements LightModule {
 
     private FileManager settings;
     private FileManager language;
+    private FileManager categories;
 
 
 
@@ -32,13 +37,13 @@ public class LightCollections implements LightModule {
         instance = this;
         initFiles();
         this.settingParams = new SettingParams(this);
+        selectLanguage();   // must be called before messageParams = new ...
         messageParams = new MessageParams(language);
-        selectLanguage();
         initSubCommands();
         registerEvents();
         isModuleEnabled = true;
         Light.getDebugPrinting().print(
-                "Successfully started core module " + this.moduleName + "!");
+                "Successfully started module " + this.moduleName + "!");
 
     }
 
@@ -65,6 +70,8 @@ public class LightCollections implements LightModule {
     private void initFiles() {
         this.settings = new FileManager(
                 Light.instance, moduleName + "/settings.yml", true);
+        this.categories = new FileManager(
+                Light.instance, moduleName + "/categories.yml", false);
     }
 
     private void selectLanguage() {
@@ -79,12 +86,16 @@ public class LightCollections implements LightModule {
         return messageParams;
     }
 
+    public FileManager getCategories() { return categories; }
+
     public FileManager getSettings() { return settings; }
 
     public FileManager getLanguage() { return language; }
 
     public void initSubCommands() {
-
+        PluginCommand collectionCommand = Bukkit.getPluginCommand("collections");
+        subCommands.add(new OpenCollectionsCommand());
+        new CommandManager(collectionCommand, subCommands);
     }
 
     private void registerEvents() {

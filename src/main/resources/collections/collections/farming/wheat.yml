@@ -1,0 +1,133 @@
+category: farming
+type: block_break
+level-up-message:
+  - '    &7&m---&#ffdc73●&r&7&m---&r &#ffdc73&lCOLLECTION #collection# &7&m---&#ffdc73●&r&7&m---'
+  - ' '
+  - '  &8● &7You leveled up <#ffdc73>#type# <gray>to level <#ffdc73>#level#'
+  - ' '
+overview-menu:
+  gui-title: '<gray>#category# Collections'
+  discovered:
+    display-name: '<light_green>#category# Collection #level#'
+    lore:
+      - '<gray>View your Farming Collections!'
+      - ''
+      - 'Collections Unlocked: <yellow>70.6<gold>%'
+      - '<gray>#progress-bar# <yellow>#current#<gold>/<yellow>#max#'
+  maxed-out:
+    display-name: '<light_green>Farming Collection #level#'
+    lore:
+      - '<gray>View your #type# Collection'
+      - '<gray>progress and rewards!'
+      - ''
+      - '<light_green><bold>COLLECTION MAXED OUT!</bold>'
+      - '<gray>Total collected: <yellow>#total#'
+      - ''
+      - '<yellow>Click to view!'
+  undiscovered:
+    item: gray_dye
+    display-name: '<red>#type#'
+    lore:
+      - '<gray>Find this item to add it to your'
+      - '<gray>collection and unlock collection'
+      - '<gray>rewards!'
+level-menu:
+  gui-title: '<gray>#type# Collections'
+  show-item:
+    display-name: '<yellow>#category# Collection #level#'
+    lore:
+      - '<gray>View all your #type# Collection'
+      - '<gray>progress and rewards!'
+      - ''
+      - '<gray>Total Collected: <yellow>#total#'
+  per-level:
+    done:
+      item: lime_stained_glass_pane
+      display-name: '<green>#category# Collection #level#'
+      lore:
+        - ''
+        - 'Progress: <light_green>#level-progress#'
+        - '<gray>#level-progress-bar# <yellow>#current#<gold>/<yellow>#level-max#>'
+        - ''
+        - '<gray>Rewards:'
+        - '<gray>#rewards#'
+        - ''
+        - '<yellow>Click to view!'
+    active:
+      item: yellow_stained_glass_pane
+      display-name: '<yellow>#category# Collection #level#'
+      lore:
+        - ''
+        - 'Progress: <light_green>#level-progress#'
+        - '<gray>#level-progress-bar# <yellow>#current#<gold>/<yellow>#level-max#>'
+        - ''
+        - '<gray>Rewards:'
+        - '<gray>#rewards#'
+    locked:
+      item: red_stained_glass_pane
+      display-name: '<red>#category# Collection #level#'
+      lore:
+        - ''
+        - 'Progress: <light_green>#level-progress#'
+        - '<gray>#level-progress-bar# <yellow>#current#<gold>/<yellow>#level-max#>'
+        - ''
+        - '<gray>Rewards:'
+        - '<gray>#rewards#'
+levels:
+  '1':
+    amount-to-farm: 50
+    rewards:
+      'item;wheat;1'
+    actions: []
+  '2':
+    amount-to-farm: 100
+    rewards:
+      'item;wheat;1'
+    actions: []
+  '3':
+    amount-to-farm: 250
+    rewards:
+      'item;wheat;1'
+    actions: []
+  '4':
+    amount-to-farm: 500
+    rewards:
+      'item;wheat;1'
+    actions: []
+  '5':
+    amount-to-farm: 1000
+    rewards:
+      'item;wheat;1'
+    actions: []
+  '6':
+    amount-to-farm: 2500
+    rewards:
+      'item;wheat;1'
+    actions: []
+  '7':
+    amount-to-farm: 10000
+    rewards:
+      'item;wheat;1'
+    actions: []
+  '8':
+    amount-to-farm: 15000
+    rewards:
+      'item;wheat;1'
+    actions: []
+  '9':
+    amount-to-farm: 25000
+    rewards:
+      'item;wheat;1'
+    actions: []
+  '10':
+    amount-to-farm: 50000
+    rewards:
+      'item;wheat;1'
+    actions: []
+  '11':
+    amount-to-farm: 100000
+    rewards:
+      'item;wheat;1'
+    actions: []
+
+

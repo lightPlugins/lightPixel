@@ -1,6 +1,8 @@
 package io.lightplugins.pixel;
 
+import com.jeff_media.customblockdata.CustomBlockData;
 import com.zaxxer.hikari.HikariDataSource;
+import io.lightplugins.pixel.collections.LightCollections;
 import io.lightplugins.pixel.regen.LightRegen;
 import io.lightplugins.pixel.skills.LightSkills;
 import io.lightplugins.pixel.util.ColorTranslation;
@@ -37,6 +39,7 @@ public class Light extends JavaPlugin {
 
     private LightSkills lightSkills;
     private LightRegen lightRegen;
+    private LightCollections lightCollections;
 
     private Map<String, LightModule> modules = new HashMap<>();
 
@@ -89,6 +92,10 @@ public class Light extends JavaPlugin {
         loadModules();
         registerEvents();
 
+        // register the data handler for custom-block data storage inside chunks
+        // this prevents data lose while shifting blocks with pistons and update the chunk data.
+
+        CustomBlockData.registerListener(this);
     }
 
     public void onDisable() {
@@ -114,6 +121,7 @@ public class Light extends JavaPlugin {
 
         this.loadModule(lightSkills, true);
         this.loadModule(lightRegen, true);
+        this.loadModule(lightCollections, true);
 
     }
 
@@ -139,7 +147,11 @@ public class Light extends JavaPlugin {
     private void initModules() {
         this.lightSkills = new LightSkills();
         this.lightRegen = new LightRegen();
+        this.lightCollections = new LightCollections();
+
         this.modules.put(this.lightSkills.getName(), this.lightSkills);
+        this.modules.put(this.lightRegen.getName(), this.lightRegen);
+        this.modules.put(this.lightCollections.getName(), this.lightCollections);
     }
 
     public FileManager selectLanguage(String languageName, String moduleName) {
@@ -247,6 +259,7 @@ public class Light extends JavaPlugin {
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new MoistureLevelPrepare(), this);
         getServer().getPluginManager().registerEvents(new AutoCollect(), this);
+
     }
 
 }

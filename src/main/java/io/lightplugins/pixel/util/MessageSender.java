@@ -11,7 +11,7 @@ public class MessageSender {
     public void sendPlayerMessage(String message, Player player) {
         Bukkit.getScheduler().runTask(Light.instance, () -> {
             Audience audience = (Audience) player;
-            Component component = Light.instance.colorTranslation.universalColor(LightSkills.getMessageParams().prefix() + message);
+            Component component = Light.instance.colorTranslation.universalColor(LightSkills.getMessageParams().prefix() + message, player);
             audience.sendMessage(component);
         });
     }

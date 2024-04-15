@@ -13,3 +13,6 @@ commands:
   lightpixel:
     description: The root command for lightEconomy overall
     aliases: [dummy]
+  collections:
+    description: The command for collections
+    aliases: [collect, coll]

@@ -8,8 +8,6 @@ public class MoistureLevelPrepare implements Listener {
 
     @EventHandler
     public void onMoistureLevelPrepare(MoistureChangeEvent event) {
-        if(event.getBlock().getWorld().getName().equalsIgnoreCase("wonderland")) {
-            event.setCancelled(true);
-        }
+        event.setCancelled(true);
     }
 }

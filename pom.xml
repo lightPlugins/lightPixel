@@ -107,6 +107,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.stefvanschie.inventoryframework</groupId>
+            <artifactId>IF</artifactId>
+            <version>0.10.13</version>
+        </dependency>
+
+        <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>2.11.5</version>
@@ -170,6 +176,13 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.jeff-media</groupId>
+            <artifactId>custom-block-data</artifactId>
+            <version>2.2.2</version>
+            <scope>compile</scope>
+        </dependency>
+
 
     </dependencies>
 
@@ -191,6 +204,14 @@
                                 <relocation>
                                     <pattern>com.zaxxer.hikari</pattern>
                                     <shadedPattern>io.lightplugins.pixel.util.database.hikari</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.jeff_media.customblockdata</pattern>
+                                    <shadedPattern>io.lightplugins.pixel.util.libaries</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.github.stefvanschie.inventoryframework</pattern>
+                                    <shadedPattern>io.lightplugins.pixel.util.libaries</shadedPattern>
                                 </relocation>
                             </relocations>
                             <outputFile>./lightpixel-dev-server/plugins/${project.artifactId}-${project.version}-SNAPSHOT.jar</outputFile>

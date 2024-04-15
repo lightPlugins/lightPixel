@@ -1,0 +1,115 @@
+gui-title: '<gray>Collections'
+pattern:
+  - '000000000'
+  - '000000000'
+  - '001234500'
+  - '000000000'
+  - '000000000'
+  - '000000000'
+contents:
+  overview:
+    item: 'painting'
+    display-name: '<green>Collections'
+    lore:
+      - '<gray>View all of the items available in'
+      - '<gray>SkyBlock. Collect more of an item to'
+      - '<gray>unlock rewards on your way to'
+      - '<gray>become a master of SkyBlock!'
+      - ' '
+      - '<gray>Collections Unlocked: <yellow>#percentage#<gold>%'
+  categories:
+    farming:
+      args:
+        pattern-id: 1
+        placeholders:
+          type: 'Farming'
+          percentage: '%lightpixel_collections_farming_percentage%'
+          progress-bar: '%progress-bar%'
+          current: '%lightpixel_collections_farming_current%'
+          total: '%lightpixel_collections_farming_total%'
+        item: 'golden_hoe 1 hide_attributes'
+        head-data: ''
+        display-name: '<green>#type# Collections'
+        lore:
+          - '<gray>View your #type# Collections!'
+          - ''
+          - '<gray>Collections Unlocked: <yellow>#percentage#<gold>%'
+          - '<gray>#progress-bar# <yellow>#current#<gold>/<yellow>#total#'
+          - ''
+          - '<yellow>Click to view!'
+    mining:
+      args:
+        pattern-id: 2
+        placeholders:
+          type: 'Mining'
+          percentage: '%lightpixel_collections_mining_percentage%'
+          progress-bar: '%progress-bar%'
+          current: '%lightpixel_collections_mining_current%'
+          total: '%lightpixel_collections_mining_total%'
+        item: 'stone_pickaxe 1 hide_attributes'
+        head-data: ''
+        display-name: '<green>#type# Collections'
+        lore:
+          - '<gray>View your #type# Collections!'
+          - ''
+          - '<gray>Collections Unlocked: <yellow>#percentage#<gold>%'
+          - '<gray>#progress-bar# <yellow>#current#<gold>/<yellow>#total#'
+          - ''
+          - '<yellow>Click to view!'
+    combat:
+      args:
+        pattern-id: 3
+        placeholders:
+          type: 'Combat'
+          percentage: '%lightpixel_collections_combat_percentage%'
+          progress-bar: '%progress-bar%'
+          current: '%lightpixel_collections_combat_current%'
+          total: '%lightpixel_collections_combat_total%'
+        item: 'stone_sword 1 hide_attributes'
+        head-data: ''
+        display-name: '<green>#type# Collections'
+        lore:
+          - '<gray>View your #type# Collections!'
+          - ''
+          - '<gray>Collections Unlocked: <yellow>#percentage#<gold>%'
+          - '<gray>#progress-bar# <yellow>#current#<gold>/<yellow>#total#'
+          - ''
+          - '<yellow>Click to view!'
+    foraging:
+      args:
+        pattern-id: 4
+        placeholders:
+          type: 'Foraging'
+          percentage: '%lightpixel_collections_foraging_percentage%'
+          progress-bar: '%progress-bar%'
+          current: '%lightpixel_collections_foraging_current%'
+          total: '%lightpixel_collections_foraging_total%'
+        item: 'jungle_sapling 1 hide_attributes'
+        head-data: ''
+        display-name: '<green>#type# Collections'
+        lore:
+          - '<gray>View your #type# Collections!'
+          - ''
+          - '<gray>Collections Unlocked: <yellow>#percentage#<gold>%'
+          - '<gray>#progress-bar# <yellow>#current#<gold>/<yellow>#total#'
+          - ''
+          - '<yellow>Click to view!'
+    fishing:
+      args:
+        pattern-id: 5
+        placeholders:
+          type: 'Fishing'
+          percentage: '%lightpixel_collections_fishing_percentage%'
+          progress-bar: '%progress-bar%'
+          current: '%lightpixel_collections_fishing_current%'
+          total: '%lightpixel_collections_fishing_total%'
+        item: 'fishing_rod 1 hide_attributes'
+        head-data: ''
+        display-name: '<green>#type# Collections'
+        lore:
+          - '<gray>View your #type# Collections!'
+          - ''
+          - '<gray>Collections Unlocked: <yellow>#percentage#<gold>%'
+          - '<gray>#progress-bar# <yellow>#current#<gold>/<yellow>#total#'
+          - ''
+          - '<yellow>Click to view!'

@@ -3,7 +3,6 @@ package io.lightplugins.pixel.util.manager;
 import io.lightplugins.pixel.Light;
 import io.lightplugins.pixel.skills.LightSkills;
 import io.lightplugins.pixel.util.CompositeTabCompleter;
-import io.lightplugins.pixel.util.NumberFormatter;
 import io.lightplugins.pixel.util.SubCommand;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
