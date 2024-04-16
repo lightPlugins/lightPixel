@@ -8,10 +8,18 @@ import io.lightplugins.pixel.util.SubCommand;
 import io.lightplugins.pixel.util.interfaces.LightModule;
 import io.lightplugins.pixel.util.manager.CommandManager;
 import io.lightplugins.pixel.util.manager.FileManager;
+import io.lightplugins.pixel.util.manager.MultiFileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class LightCollections implements LightModule {
 
@@ -21,6 +29,8 @@ public class LightCollections implements LightModule {
     public final String moduleName = "collections";
     public final String adminPerm = "light." + moduleName + ".admin";
     private final ArrayList<SubCommand> subCommands = new ArrayList<>();
+    public static List<File> collectionFiles = new ArrayList<>();
+    public static HashMap<String, List<File>> collectionFilesMap = new HashMap<>();
 
     private SettingParams settingParams;
     private static MessageParams messageParams;
@@ -28,6 +38,7 @@ public class LightCollections implements LightModule {
     private FileManager settings;
     private FileManager language;
     private FileManager categories;
+    private MultiFileManager multiFileManager;
 
 
 
@@ -39,6 +50,7 @@ public class LightCollections implements LightModule {
         this.settingParams = new SettingParams(this);
         selectLanguage();   // must be called before messageParams = new ...
         messageParams = new MessageParams(language);
+        readCollectionMenuItems();
         initSubCommands();
         registerEvents();
         isModuleEnabled = true;
@@ -76,6 +88,38 @@ public class LightCollections implements LightModule {
 
     private void selectLanguage() {
         this.language = Light.instance.selectLanguage(settingParams.getModuleLanguage(), moduleName);
+    }
+
+    private void readCollectionMenuItems() {
+        try {
+            this.multiFileManager = new MultiFileManager(
+                    "plugins/lightPixel/" + moduleName + "/collections/");
+            collectionFiles = multiFileManager.getFiles();
+            Light.getDebugPrinting().print(
+                    "Found §e" + collectionFiles.size() + "§f collection file(s)");
+            if(collectionFiles.size() > 0) {
+                collectionFiles.forEach(singleFile -> {
+                    FileConfiguration conf = YamlConfiguration.loadConfiguration(singleFile);
+                    String collectionCategory = conf.getString("category");
+                    List<File> filesInCategory = collectionFilesMap.getOrDefault(collectionCategory, new ArrayList<>());
+                    filesInCategory.add(singleFile);
+                    collectionFilesMap.put(collectionCategory, filesInCategory);
+                    Light.getDebugPrinting().print("- §e" + singleFile.getName());
+                });
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException("Failed to initialize collection configs!", ex);
+        }
+    }
+
+    public List<File> getCollectionByCategory(String key) {
+        List<File> files = new ArrayList<>();
+        for (Map.Entry<String, List<File>> entry : collectionFilesMap.entrySet()) {
+            if (entry.getKey().contains(key)) {
+                files.addAll(entry.getValue());
+            }
+        }
+        return files;
     }
 
     public SettingParams getSettingParams() {

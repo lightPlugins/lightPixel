@@ -233,7 +233,7 @@ public class Light extends JavaPlugin {
 
     public List<File> getMultiFiles(String path) throws IOException {
         // Add files from the MultiFileManager to the existing files list
-        return new ArrayList<>(readMultiFiles(path).getYamlFiles());
+        return new ArrayList<>(readMultiFiles(path).getFiles());
     }
 
     public MultiFileManager readMultiFiles(String directoryPath) throws IOException {

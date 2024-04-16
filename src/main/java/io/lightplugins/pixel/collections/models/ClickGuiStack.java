@@ -1,4 +1,4 @@
-package io.lightplugins.pixel.collections.abstracts;
+package io.lightplugins.pixel.collections.models;
 
 import io.lightplugins.pixel.Light;
 import io.lightplugins.pixel.util.NumberFormatter;
@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 
-public class Category {
+public class ClickGuiStack {
 
     private final ConfigurationSection CATEGORY_ARGS;
     private final ConfigurationSection PLACEHOLDERS;
@@ -28,7 +28,7 @@ public class Category {
 
 
 
-    public Category(ConfigurationSection section, Player player) {
+    public ClickGuiStack(ConfigurationSection section, Player player) {
         this.CATEGORY_ARGS = section.getConfigurationSection("args");
         this.PLACEHOLDERS = section.getConfigurationSection("args.placeholders");
         this.PATTERN_ID = section.getString("args.pattern-id");

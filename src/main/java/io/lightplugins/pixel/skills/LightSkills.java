@@ -1,20 +1,16 @@
 package io.lightplugins.pixel.skills;
 
 import io.lightplugins.pixel.Light;
-import io.lightplugins.pixel.skills.commands.DummyCommand;
 import io.lightplugins.pixel.skills.config.MessageParams;
 import io.lightplugins.pixel.skills.config.SettingParams;
 import io.lightplugins.pixel.skills.manager.QueryManager;
 import io.lightplugins.pixel.util.SubCommand;
-import io.lightplugins.pixel.util.events.CheckSkillRequirement;
 import io.lightplugins.pixel.util.events.MoistureLevelPrepare;
 import io.lightplugins.pixel.util.interfaces.LightModule;
-import io.lightplugins.pixel.util.manager.CommandManager;
 import io.lightplugins.pixel.util.manager.FileManager;
 import io.lightplugins.vaulty.api.economy.VaultyEconomy;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 import java.util.ArrayList;
@@ -129,7 +125,6 @@ public class LightSkills implements LightModule {
 
     public void registerEvents() {
         Bukkit.getPluginManager().registerEvents(new MoistureLevelPrepare(), Light.instance);
-        Bukkit.getPluginManager().registerEvents(new CheckSkillRequirement(), Light.instance);
     }
 
     public SettingParams getSettingParams() {

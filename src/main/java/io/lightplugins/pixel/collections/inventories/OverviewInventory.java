@@ -5,15 +5,15 @@ import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.OutlinePane;
 import com.github.stefvanschie.inventoryframework.pane.Pane;
 import com.github.stefvanschie.inventoryframework.pane.PatternPane;
-import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import com.github.stefvanschie.inventoryframework.pane.util.Pattern;
 import io.lightplugins.pixel.Light;
 import io.lightplugins.pixel.collections.LightCollections;
-import io.lightplugins.pixel.collections.abstracts.Category;
+import io.lightplugins.pixel.collections.models.ClickGuiStack;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.profile.PlayerProfile;
@@ -51,7 +51,7 @@ public class OverviewInventory {
         for(String path : Objects.requireNonNull(conf.getConfigurationSection(
                 "contents.categories")).getKeys(false)) {
 
-            Category category = new Category(Objects.requireNonNull(
+            ClickGuiStack category = new ClickGuiStack(Objects.requireNonNull(
                     conf.getConfigurationSection(
                             "contents.categories." + path)), player);
             ItemStack itemStack = category.getGuiItem();
@@ -66,6 +66,14 @@ public class OverviewInventory {
             }
 
             pane.bindItem(patternID.charAt(0), new GuiItem(itemStack, inventoryClickEvent -> {
+
+                if(inventoryClickEvent.getAction().equals(InventoryAction.HOTBAR_SWAP)) {
+                    return;
+                }
+
+                CollectionInventory collectionInventory = new CollectionInventory(player, path);
+                collectionInventory.openInventory();
+
                 String output = path.substring(0, 1).toUpperCase() + path.substring(1);
                 player.sendMessage("§7Category §c" + output + "§7 clicked");
 

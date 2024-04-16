@@ -5,74 +5,150 @@ level-up-message:
   - ' '
   - '  &8● &7You leveled up <#ffdc73>#type# <gray>to level <#ffdc73>#level#'
   - ' '
-overview-menu:
-  gui-title: '<gray>#category# Collections'
+collection-menu:
+  pattern:
+    - '0000a0000'
+    - '000000000'
+    - '000000000'
+    - '000000000'
+    - '000000000'
+    - '000000000'
+  gui-title: '<gray>Farming Collection'
   discovered:
-    display-name: '<light_green>#category# Collection #level#'
-    lore:
-      - '<gray>View your Farming Collections!'
-      - ''
-      - 'Collections Unlocked: <yellow>70.6<gold>%'
-      - '<gray>#progress-bar# <yellow>#current#<gold>/<yellow>#max#'
-  maxed-out:
-    display-name: '<light_green>Farming Collection #level#'
-    lore:
-      - '<gray>View your #type# Collection'
-      - '<gray>progress and rewards!'
-      - ''
-      - '<light_green><bold>COLLECTION MAXED OUT!</bold>'
-      - '<gray>Total collected: <yellow>#total#'
-      - ''
-      - '<yellow>Click to view!'
-  undiscovered:
-    item: gray_dye
-    display-name: '<red>#type#'
-    lore:
-      - '<gray>Find this item to add it to your'
-      - '<gray>collection and unlock collection'
-      - '<gray>rewards!'
-level-menu:
-  gui-title: '<gray>#type# Collections'
-  show-item:
-    display-name: '<yellow>#category# Collection #level#'
-    lore:
-      - '<gray>View all your #type# Collection'
-      - '<gray>progress and rewards!'
-      - ''
-      - '<gray>Total Collected: <yellow>#total#'
-  per-level:
-    done:
-      item: lime_stained_glass_pane
-      display-name: '<green>#category# Collection #level#'
+    args:
+      pattern-id: a
+      placeholders:
+        collection: 'Wheat'
+        level: '%lightpixel_collections_farming_wheat_level%'
+        unlock-percentage: '%lightpixel_collections_farming_wheat_unlock_percentage%'
+        progress-bar: '%progress-bar%'
+        current: '%lightpixel_collections_farming_wheat_current%'
+        max: '%lightpixel_collections_farming_wheat_max%'
+      item: 'wheat 1 hide_attributes'
+      head-data: ''
+      display-name: '<green>#collection# Collection #level#'
       lore:
+        - '<gray>View your #collection# Collections!'
         - ''
-        - 'Progress: <light_green>#level-progress#'
-        - '<gray>#level-progress-bar# <yellow>#current#<gold>/<yellow>#level-max#>'
+        - 'Collections Unlocked: <yellow>#unlock-percentage#<gold>%'
+        - '<gray>#progress-bar# <yellow>#current#<gold>/<yellow>#max#'
+  maxed-out:
+    args:
+      pattern-id: 1
+      placeholders:
+        collection: 'Wheat'
+        level: '%lightpixel_collections_farming_wheat_level%'
+        unlock-percentage: '%lightpixel_collections_farming_wheat_unlock_percentage%'
+        progress-bar: '%progress-bar%'
+        current: '%lightpixel_collections_farming_wheat_current%'
+        max: '%lightpixel_collections_farming_wheat_max%'
+      item: 'wheat 1 hide_attributes'
+      head-data: ''
+      display-name: '<green>#collection# Collection #level#'
+      lore:
+        - '<gray>View your #collection# Collection'
+        - '<gray>progress and rewards!'
         - ''
-        - '<gray>Rewards:'
-        - '<gray>#rewards#'
+        - '<green><bold>COLLECTION MAXED OUT!</bold>'
+        - '<gray>Total collected: <yellow>#total#'
         - ''
         - '<yellow>Click to view!'
+  undiscovered:
+    args:
+      pattern-id: 1
+      placeholders:
+        collection: 'Wheat'
+        level: '%lightpixel_collections_farming_wheat_level%'
+        unlock-percentage: '%lightpixel_collections_farming_wheat_unlock_percentage%'
+        progress-bar: '%progress-bar%'
+        current: '%lightpixel_collections_farming_wheat_current%'
+        max: '%lightpixel_collections_farming_wheat_max%'
+      item: 'gray_dye 1 hide_attributes'
+      head-data: ''
+      display-name: '<red>#collection#'
+      lore:
+        - '<gray>Find this item to add it to your'
+        - '<gray>collection and unlock collection'
+        - '<gray>rewards!'
+level-menu:
+  gui-title: '<gray>#category# Collections'
+  show-item:
+    args:
+      placeholders:
+        type: 'Wheat'
+        category: 'Farming'
+        total: '%lightpixel_collections_farming_wheat_total%'
+      item: 'gray_dye 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>#type# Collection #level#'
+      lore:
+        - '<gray>View all your #type# Collection'
+        - '<gray>progress and rewards!'
+        - ''
+        - '<gray>Total Collected: <yellow>#total#'
+  per-level:
+    done:
+      args:
+        pattern-id: 1
+        placeholders:
+          category: 'Wheat'
+          level: '%lightpixel_collections_farming_wheat_level%'
+          level-progress: '%lightpixel_collections_farming_wheat_level_progress%'
+          level-progress-bar: '%progress-bar%'
+          current: '%lightpixel_collections_farming_wheat_current%'
+          max: '%lightpixel_collections_farming_wheat_level_max%'
+        item: 'lime_stained_glass_pane 1 hide_attributes'
+        head-data: ''
+        display-name: '<green>#category# Collection #level#'
+        lore:
+          - ''
+          - 'Progress: <green>#level-progress#'
+          - '<gray>#level-progress-bar# <yellow>#current#<gold>/<yellow>#max#>'
+          - ''
+          - '<gray>Rewards:'
+          - '<gray>#rewards#'
+          - ''
+          - '<yellow>Click to view!'
     active:
-      item: yellow_stained_glass_pane
-      display-name: '<yellow>#category# Collection #level#'
-      lore:
-        - ''
-        - 'Progress: <light_green>#level-progress#'
-        - '<gray>#level-progress-bar# <yellow>#current#<gold>/<yellow>#level-max#>'
-        - ''
-        - '<gray>Rewards:'
-        - '<gray>#rewards#'
+      args:
+        pattern-id: 1
+        placeholders:
+          category: 'Wheat'
+          level: '%lightpixel_collections_farming_wheat_level%'
+          level-progress: '%lightpixel_collections_farming_wheat_level_progress%'
+          level-progress-bar: '%progress-bar%'
+          current: '%lightpixel_collections_farming_wheat_current%'
+          max: '%lightpixel_collections_farming_wheat_level_max%'
+        item: 'yellow_stained_glass_pane 1 hide_attributes'
+        head-data: ''
+        display-name: '<yellow>#category# Collection #level#'
+        lore:
+          - ''
+          - 'Progress: <green>#level-progress#'
+          - '<gray>#level-progress-bar# <yellow>#current#<gold>/<yellow>#max#>'
+          - ''
+          - '<gray>Rewards:'
+          - '<gray>#rewards#'
     locked:
-      item: red_stained_glass_pane
-      display-name: '<red>#category# Collection #level#'
-      lore:
-        - ''
-        - 'Progress: <light_green>#level-progress#'
-        - '<gray>#level-progress-bar# <yellow>#current#<gold>/<yellow>#level-max#>'
-        - ''
-        - '<gray>Rewards:'
-        - '<gray>#rewards#'
+      args:
+        pattern-id: 1
+        placeholders:
+          category: 'Wheat'
+          level: '%lightpixel_collections_farming_wheat_level%'
+          level-progress: '%lightpixel_collections_farming_wheat_level_progress%'
+          level-progress-bar: '%progress-bar%'
+          current: '%lightpixel_collections_farming_wheat_current%'
+          max: '%lightpixel_collections_farming_wheat_level_max%'
+        item: 'red_stained_glass_pane 1 hide_attributes'
+        head-data: ''
+        display-name: '<red>#category# Collection #level#'
+        lore:
+          - ''
+          - 'Progress: <green>#level-progress#'
+          - '<gray>#level-progress-bar# <yellow>#current#<gold>/<yellow>#level-max#>'
+          - ''
+          - '<gray>Rewards:'
+          - '<gray>#rewards#'
 levels:
   '1':
     amount-to-farm: 50
