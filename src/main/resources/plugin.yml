@@ -3,7 +3,7 @@ author: lightPlugins
 version: 0.1.0
 main: io.lightplugins.pixel.Light
 api-version: 1.13
-depend: [eco, Vault, PlaceholderAPI, WorldGuard]
+depend: [eco, EcoSkills, Vault, PlaceholderAPI, WorldGuard]
 softdepend: []
 loadbefore: []
 libraries: []

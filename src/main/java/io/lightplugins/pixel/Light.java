@@ -3,11 +3,13 @@ package io.lightplugins.pixel;
 import com.jeff_media.customblockdata.CustomBlockData;
 import com.zaxxer.hikari.HikariDataSource;
 import io.lightplugins.pixel.collections.LightCollections;
+import io.lightplugins.pixel.collections.placeholders.CollectionPlaceholder;
 import io.lightplugins.pixel.regen.LightRegen;
 import io.lightplugins.pixel.skills.LightSkills;
 import io.lightplugins.pixel.util.ColorTranslation;
 import io.lightplugins.pixel.util.DebugPrinting;
 import io.lightplugins.pixel.util.MessageSender;
+import io.lightplugins.pixel.util.SubPlaceholder;
 import io.lightplugins.pixel.util.database.SQLDatabase;
 import io.lightplugins.pixel.util.database.impl.MySQLDatabase;
 import io.lightplugins.pixel.util.database.impl.SQLiteDatabase;
@@ -19,6 +21,7 @@ import io.lightplugins.pixel.util.hooks.WorldGuardHook;
 import io.lightplugins.pixel.util.interfaces.LightModule;
 import io.lightplugins.pixel.util.manager.FileManager;
 import io.lightplugins.pixel.util.manager.MultiFileManager;
+import io.lightplugins.pixel.util.manager.PlaceholderManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -42,6 +45,7 @@ public class Light extends JavaPlugin {
     private LightCollections lightCollections;
 
     private Map<String, LightModule> modules = new HashMap<>();
+    private final ArrayList<SubPlaceholder> subPlaceholders = new ArrayList<>();
 
     private static MessageSender messageSender;
     public static FileManager database;
@@ -90,6 +94,8 @@ public class Light extends JavaPlugin {
 
         initModules();
         loadModules();
+        initSubPlaceHolders();
+        registerPlaceHolders();
         registerEvents();
 
         // register the data handler for custom-block data storage inside chunks
@@ -123,6 +129,15 @@ public class Light extends JavaPlugin {
         this.loadModule(lightRegen, true);
         this.loadModule(lightCollections, true);
 
+    }
+
+    private void initSubPlaceHolders() {
+        this.subPlaceholders.add(new CollectionPlaceholder());
+    }
+
+    private void registerPlaceHolders() {
+        PlaceholderManager placeholderManager = new PlaceholderManager(this.subPlaceholders);
+        placeholderManager.register();
     }
 
     private void loadModule(LightModule lightModule, boolean enable) {

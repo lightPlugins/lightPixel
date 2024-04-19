@@ -4,6 +4,8 @@ import io.lightplugins.pixel.Light;
 import io.lightplugins.pixel.collections.commands.OpenCollectionsCommand;
 import io.lightplugins.pixel.collections.config.MessageParams;
 import io.lightplugins.pixel.collections.config.SettingParams;
+import io.lightplugins.pixel.collections.events.CreatePlayerCollectionData;
+import io.lightplugins.pixel.collections.models.PlayerCollectionData;
 import io.lightplugins.pixel.util.SubCommand;
 import io.lightplugins.pixel.util.interfaces.LightModule;
 import io.lightplugins.pixel.util.manager.CommandManager;
@@ -16,10 +18,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class LightCollections implements LightModule {
 
@@ -31,6 +30,7 @@ public class LightCollections implements LightModule {
     private final ArrayList<SubCommand> subCommands = new ArrayList<>();
     public static List<File> collectionFiles = new ArrayList<>();
     public static HashMap<String, List<File>> collectionFilesMap = new HashMap<>();
+    public static HashMap<UUID, List<PlayerCollectionData>> playerCollectionData = new HashMap<>();
 
     private SettingParams settingParams;
     private static MessageParams messageParams;
@@ -143,6 +143,6 @@ public class LightCollections implements LightModule {
     }
 
     private void registerEvents() {
-
+        Bukkit.getPluginManager().registerEvents(new CreatePlayerCollectionData(), Light.instance);
     }
 }

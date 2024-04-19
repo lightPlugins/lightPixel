@@ -19,7 +19,7 @@ collection-menu:
       pattern-id: a
       placeholders:
         collection: 'Wheat'
-        level: '%lightpixel_collections_farming_wheat_level%'
+        level: '%lightpixel_collections_level_farming_wheat_current%'
         unlock-percentage: '%lightpixel_collections_farming_wheat_unlock_percentage%'
         progress-bar: '%progress-bar%'
         current: '%lightpixel_collections_farming_wheat_current%'
