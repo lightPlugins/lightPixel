@@ -12,7 +12,7 @@ collection-menu:
     - '000000000'
     - '000000000'
     - '000000000'
-    - '000000000'
+    - '000cb0000'
   gui-title: '<gray>Farming Collection'
   discovered:
     args:
@@ -70,6 +70,22 @@ collection-menu:
         - '<gray>Find this item to add it to your'
         - '<gray>collection and unlock collection'
         - '<gray>rewards!'
+  close-button:
+    args:
+      pattern-id: b
+      placeholders: []
+      item: 'redstone 1 hide_attributes'
+      head-data: ''
+      display-name: '<red>Back'
+      lore: []
+  back-button:
+    args:
+      pattern-id: c
+      placeholders: []
+      item: 'arrow 1 hide_attributes'
+      head-data: ''
+      display-name: '<red>Back'
+      lore: []
 level-menu:
   gui-title: '<gray>#category# Collections'
   show-item:

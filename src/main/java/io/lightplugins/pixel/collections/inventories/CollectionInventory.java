@@ -57,6 +57,14 @@ public class CollectionInventory {
 
             ItemStack itemStack = new ItemStack(Material.STONE, 1);
 
+            ClickGuiStack closeButton = new ClickGuiStack(
+                    Objects.requireNonNull(conf.getConfigurationSection(
+                            "collection-menu.close-button")), player);
+
+            ClickGuiStack backButton = new ClickGuiStack(
+                    Objects.requireNonNull(conf.getConfigurationSection(
+                            "collection-menu.back-button")), player);
+
             if (isDiscovered) {
                 ClickGuiStack clickGuiStack = new ClickGuiStack(
                         Objects.requireNonNull(conf.getConfigurationSection(
@@ -77,6 +85,18 @@ public class CollectionInventory {
             }
 
             pane.addItem(new GuiItem(itemStack, inventoryClickEvent -> {
+
+                if(Objects.equals(inventoryClickEvent.getCurrentItem(), closeButton.getGuiItem())) {
+                    player.closeInventory();
+                    return;
+                }
+
+                if(Objects.equals(inventoryClickEvent.getCurrentItem(), backButton.getGuiItem())) {
+                    OverviewInventory overviewInventory = new OverviewInventory(player);
+                    overviewInventory.openInventory();
+                    return;
+                }
+
                 if(inventoryClickEvent.getAction().equals(InventoryAction.HOTBAR_SWAP)) {
                     return;
                 }

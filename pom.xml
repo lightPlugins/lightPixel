@@ -214,7 +214,7 @@
                                     <shadedPattern>io.lightplugins.pixel.util.libaries</shadedPattern>
                                 </relocation>
                             </relocations>
-                            <outputFile>./lightpixel-dev-server/plugins/${project.artifactId}-${project.version}-SNAPSHOT.jar</outputFile>
+                            <outputFile>C:/Users/phili/Desktop/skypixel-dev-server/plugins/${project.artifactId}-${project.version}-SNAPSHOT.jar</outputFile>
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>
