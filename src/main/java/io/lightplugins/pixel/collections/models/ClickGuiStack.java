@@ -42,6 +42,11 @@ public class ClickGuiStack {
     }
 
     private void applyPlaceholders() {
+
+        if(PLACEHOLDERS == null) {
+            return;
+        }
+
         for(String placeholder : PLACEHOLDERS.getKeys(true)) {
             placeholders.put(
                     placeholder,
