@@ -1,11 +1,13 @@
 package io.lightplugins.pixel.util.events;
 
+import com.bgsoftware.superiorskyblock.api.SuperiorSkyblockAPI;
+import com.bgsoftware.superiorskyblock.api.island.Island;
+import com.bgsoftware.superiorskyblock.api.wrappers.SuperiorPlayer;
 import com.jeff_media.customblockdata.CustomBlockData;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import com.sk89q.worldguard.protection.flags.Flags;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import com.sk89q.worldguard.protection.regions.RegionQuery;
 import io.lightplugins.pixel.Light;
@@ -17,6 +19,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.block.*;
+import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -43,12 +46,26 @@ public class AutoCollect implements Listener {
         RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
         RegionQuery query = container.createQuery();
 
+        /*
+         *  Check if the player is in a region that has the LIGHT_REGEN flag set to DENY
+         *
+
         if(!query.testState(BukkitAdapter.adapt(player.getLocation()), localPlayer, WorldGuardHook.LIGHT_REGEN)) {
             return;
         }
 
-        if(!query.testState(BukkitAdapter.adapt(player.getLocation()), localPlayer, Flags.BLOCK_BREAK)) {
-            return;
+         */
+
+        boolean isLightRegenZone = query.testState(BukkitAdapter.adapt(player.getLocation()), localPlayer, WorldGuardHook.LIGHT_REGEN);
+
+        if(Light.isSkyblockHook || isLightRegenZone) {
+
+            SuperiorPlayer superiorPlayer = SuperiorSkyblockAPI.getPlayer(player.getUniqueId());
+            Island island = superiorPlayer.getIsland();
+
+            if(!island.isMember(superiorPlayer)) {
+                return;
+            }
         }
 
         if(event.getBlock().getType().equals(Material.CHEST)) {
@@ -151,11 +168,20 @@ public class AutoCollect implements Listener {
 
             //  handle multiplier for farming materials
 
-            if(materialFarming.contains(singleStack.getType())) {
-                if(!isPlayerPlaced(block)) {
-                    singleStack.setAmount(Math.min(singleStack.getAmount() * multiplier.getFarmingFortuneAmount(), 64));
+            if(block.getBlockData() instanceof Ageable ageable) {
+                if(materialFarming.contains(singleStack.getType())) {
+                    if(!isPlayerPlaced(block) || ageable.getAge() == ageable.getMaximumAge()) {
+                        singleStack.setAmount(Math.min(singleStack.getAmount() * multiplier.getFarmingFortuneAmount(), 64));
+                    }
+                }
+            } else {
+                if(materialFarming.contains(singleStack.getType())) {
+                    if(!isPlayerPlaced(block)) {
+                        singleStack.setAmount(Math.min(singleStack.getAmount() * multiplier.getFarmingFortuneAmount(), 64));
+                    }
                 }
             }
+
 
             //  handle multiplier for mining materials
 

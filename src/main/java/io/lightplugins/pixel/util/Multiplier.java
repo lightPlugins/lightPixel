@@ -44,7 +44,8 @@ public class Multiplier {
 
     public int getMiningFortuneAmount() {
         if(checkPercentage(getMiningFortuneChance())) {
-            return getMiningFortuneMultiplier();
+            return getMiningFortuneMultiplier() != 1 ? getMiningFortuneMultiplier() : 2;
+
         } else {
             if(getMiningFortuneMultiplier() == 1) {
                 return 1;
@@ -55,7 +56,7 @@ public class Multiplier {
 
     public int getFarmingFortuneAmount() {
         if(checkPercentage(getFarmingFortuneChance())) {
-            return getFarmingFortuneMultiplier();
+            return getFarmingFortuneMultiplier() != 1 ? getFarmingFortuneMultiplier() : 2;
         } else {
             if(getFarmingFortuneMultiplier() == 1) {
                 return 1;
@@ -66,7 +67,7 @@ public class Multiplier {
 
     public int getForagingFortuneAmount() {
         if(checkPercentage(getForagingFortuneChance())) {
-            return getForagingFortuneMultiplier();
+            return getForagingFortuneMultiplier() != 1 ? getForagingFortuneMultiplier() : 2;
         } else {
             if(getForagingFortuneMultiplier() == 1) {
                 return 1;

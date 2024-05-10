@@ -57,6 +57,7 @@ public class Light extends JavaPlugin {
 
 
     public static boolean isPlaceholderAPI = false;
+    public static boolean isSkyblockHook = false;
 
     public HikariDataSource ds;
 
@@ -199,6 +200,11 @@ public class Light extends JavaPlugin {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             getDebugPrinting().print("PlaceholderAPI is present. Hooking into PlaceholderAPI");
             isPlaceholderAPI = true;
+        }
+
+        if (Bukkit.getPluginManager().getPlugin("SuperiorSkyblock") != null) {
+            getDebugPrinting().print("SuperiorSkyblock is present. Hooking into SuperiorSkyblockAPI");
+            isSkyblockHook = true;
         }
 
         this.worldGuardHook = new WorldGuardHook();
