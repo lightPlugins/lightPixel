@@ -78,8 +78,6 @@ public class AutoCollect implements Listener {
             return;
         }
 
-        //  check if the black was placed by a non-creative player
-
         Multiplier multiplier = new Multiplier(player);
 
         //  handle SUGAR_CANE

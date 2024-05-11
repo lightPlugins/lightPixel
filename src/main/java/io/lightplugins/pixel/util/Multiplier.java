@@ -36,11 +36,11 @@ public class Multiplier {
     }
 
     private int getMiningFortuneMultiplier() { return (MINING_FORTUNE / 100) + 1; }
-    private double getMiningFortuneChance() { return (double) (MINING_FORTUNE % 100) / 100; }
+    private double getMiningFortuneChance() { return (MINING_FORTUNE % 100); }
     private int getFarmingFortuneMultiplier() { return (FARMING_FORTUNE / 100) + 1; }
-    private double getFarmingFortuneChance() { return (double) (FARMING_FORTUNE % 100) / 100;}
+    private double getFarmingFortuneChance() { return  (FARMING_FORTUNE % 100);}
     private int getForagingFortuneMultiplier() { return (FORAGING_FORTUNE / 100) + 1; }
-    private double getForagingFortuneChance() { return (double) (FORAGING_FORTUNE % 100) / 100; }
+    private double getForagingFortuneChance() { return (FORAGING_FORTUNE % 100); }
 
     public int getMiningFortuneAmount() {
         if(checkPercentage(getMiningFortuneChance())) {

@@ -4,6 +4,8 @@ import com.jeff_media.customblockdata.CustomBlockData;
 import com.zaxxer.hikari.HikariDataSource;
 import io.lightplugins.pixel.collections.LightCollections;
 import io.lightplugins.pixel.collections.placeholders.CollectionPlaceholder;
+import io.lightplugins.pixel.compactor.LightCompactor;
+import io.lightplugins.pixel.profiles.LightProfiles;
 import io.lightplugins.pixel.regen.LightRegen;
 import io.lightplugins.pixel.skills.LightSkills;
 import io.lightplugins.pixel.util.ColorTranslation;
@@ -43,6 +45,8 @@ public class Light extends JavaPlugin {
     private LightSkills lightSkills;
     private LightRegen lightRegen;
     private LightCollections lightCollections;
+    private LightCompactor lightCompactor;
+    private LightProfiles lightProfiles;
 
     private Map<String, LightModule> modules = new HashMap<>();
     private final ArrayList<SubPlaceholder> subPlaceholders = new ArrayList<>();
@@ -129,6 +133,8 @@ public class Light extends JavaPlugin {
         this.loadModule(lightSkills, true);
         this.loadModule(lightRegen, true);
         this.loadModule(lightCollections, true);
+        this.loadModule(lightCompactor, true);
+        this.loadModule(lightProfiles, true);
 
     }
 
