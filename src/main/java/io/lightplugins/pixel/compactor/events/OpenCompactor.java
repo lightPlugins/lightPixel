@@ -21,6 +21,8 @@ public class OpenCompactor implements Listener {
         EcoItem compactor4000 = EcoItems.INSTANCE.getByID("super_compactor_4000");
         EcoItem compactor6000 = EcoItems.INSTANCE.getByID("super_compactor_6000");
 
+        ItemStack test = compactor2000.getItemStack();
+
         if(compactor2000 == null || compactor4000 == null || compactor6000 == null) {
             return;
         }
