@@ -31,7 +31,7 @@
                   <shadedPattern>io.lightplugins.pixel.util.libaries</shadedPattern>
                 </relocation>
               </relocations>
-              <outputFile>C:/Users/Philipp/Desktop/skypixel-dev-server/plugins/${project.artifactId}-${project.version}-SNAPSHOT.jar</outputFile>
+              <outputFile>C:/Users/phili/Desktop/skypixel-dev-server/plugins/${project.artifactId}-${project.version}-SNAPSHOT.jar</outputFile>
               <filters>
                 <filter>
                   <artifact>*:*</artifact>
@@ -170,6 +170,18 @@
       <groupId>com.willfp</groupId>
       <artifactId>EcoSkills</artifactId>
       <version>3.45.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.willfp</groupId>
+      <artifactId>EcoItems</artifactId>
+      <version>5.44.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.willfp</groupId>
+      <artifactId>libreforge</artifactId>
+      <version>4.59.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

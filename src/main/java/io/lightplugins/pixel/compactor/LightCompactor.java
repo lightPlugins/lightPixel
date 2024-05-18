@@ -68,7 +68,7 @@ public class LightCompactor implements LightModule {
 
     @Override
     public String getName() {
-        return null;
+        return moduleName;
     }
 
     private void initFiles() {

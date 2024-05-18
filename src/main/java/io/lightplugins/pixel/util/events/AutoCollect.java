@@ -43,6 +43,12 @@ public class AutoCollect implements Listener {
         Material mat = event.getBlock().getType();
         Block block = event.getBlock();
 
+        //  while a player is in a creative mode, drops should not be handled.
+
+        if(player.getGameMode().equals(GameMode.CREATIVE)) {
+            return;
+        }
+
         LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(player);
         RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
         RegionQuery query = container.createQuery();
@@ -135,7 +141,7 @@ public class AutoCollect implements Listener {
             //  handle farming materials
 
             List<Material> materialFarming = Arrays.asList(
-                    Material.WHEAT, Material.CARROTS, Material.POTATOES, Material.BEETROOTS,
+                    Material.WHEAT, Material.CARROTS, Material.POTATOES, Material.BEETROOT,
                     Material.SUGAR_CANE, Material.CACTUS, Material.KELP,
                     Material.MELON, Material.PUMPKIN, Material.SWEET_BERRIES);
 

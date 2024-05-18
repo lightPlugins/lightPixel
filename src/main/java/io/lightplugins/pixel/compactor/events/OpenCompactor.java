@@ -1,7 +1,7 @@
 package io.lightplugins.pixel.compactor.events;
 
-import com.willfp.ecoitems.items.EcoItem;
-import com.willfp.ecoitems.items.EcoItems;
+import com.willfp.eco.core.items.Items;
+import com.willfp.eco.core.items.TestableItem;
 import io.lightplugins.pixel.compactor.LightCompactor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,23 +15,18 @@ public class OpenCompactor implements Listener {
     public void onRightClickCompactor(PlayerInteractEvent event) {
 
         Player player = event.getPlayer();
+
         ItemStack itemStack = event.getItem();
 
-        EcoItem compactor2000 = EcoItems.INSTANCE.getByID("super_compactor_2000");
-        EcoItem compactor4000 = EcoItems.INSTANCE.getByID("super_compactor_4000");
-        EcoItem compactor6000 = EcoItems.INSTANCE.getByID("super_compactor_6000");
-
-        ItemStack test = compactor2000.getItemStack();
-
-        if(compactor2000 == null || compactor4000 == null || compactor6000 == null) {
-            return;
-        }
+        TestableItem compactor2000 = Items.lookup("super_compactor_2000");
+        TestableItem compactor4000 = Items.lookup("super_compactor_4000");
+        TestableItem compactor6000 = Items.lookup("super_compactor_6000");
 
         if(itemStack == null) {
             return;
         }
 
-        if(itemStack.equals(compactor2000.getItemStack())) {
+        if(itemStack.equals(compactor2000.getItem())) {
 
             //  TODO -> PlayerProfile storage in database and gets compactors from there
 

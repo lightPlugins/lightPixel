@@ -72,7 +72,7 @@ public class LightProfiles implements LightModule {
 
     @Override
     public String getName() {
-        return null;
+        return moduleName;
     }
 
     private void initFiles() {

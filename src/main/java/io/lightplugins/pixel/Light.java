@@ -170,6 +170,8 @@ public class Light extends JavaPlugin {
         this.lightSkills = new LightSkills();
         this.lightRegen = new LightRegen();
         this.lightCollections = new LightCollections();
+        this.lightCompactor = new LightCompactor();
+        this.lightProfiles = new LightProfiles();
 
         this.modules.put(this.lightSkills.getName(), this.lightSkills);
         this.modules.put(this.lightRegen.getName(), this.lightRegen);
