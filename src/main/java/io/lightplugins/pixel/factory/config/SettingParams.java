@@ -1,14 +1,13 @@
-package io.lightplugins.pixel.profiles.config;
+package io.lightplugins.pixel.factory.config;
 
-import io.lightplugins.pixel.compactor.LightCompactor;
-import io.lightplugins.pixel.profiles.LightProfiles;
+import io.lightplugins.pixel.factory.LightFactory;
 
 public class SettingParams {
 
-    private final LightProfiles lightProfiles;
+    private final LightFactory lightProfiles;
     private final String defaultCurrency = "default-currency.";
 
-    public SettingParams(LightProfiles lightProfiles) {
+    public SettingParams(LightFactory lightProfiles) {
         this.lightProfiles = lightProfiles;
     }
 

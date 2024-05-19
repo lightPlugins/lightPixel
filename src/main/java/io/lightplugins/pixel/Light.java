@@ -5,7 +5,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import io.lightplugins.pixel.collections.LightCollections;
 import io.lightplugins.pixel.collections.placeholders.CollectionPlaceholder;
 import io.lightplugins.pixel.compactor.LightCompactor;
-import io.lightplugins.pixel.profiles.LightProfiles;
+import io.lightplugins.pixel.factory.LightFactory;
 import io.lightplugins.pixel.regen.LightRegen;
 import io.lightplugins.pixel.skills.LightSkills;
 import io.lightplugins.pixel.util.ColorTranslation;
@@ -46,7 +46,7 @@ public class Light extends JavaPlugin {
     private LightRegen lightRegen;
     private LightCollections lightCollections;
     private LightCompactor lightCompactor;
-    private LightProfiles lightProfiles;
+    private LightFactory lightProfiles;
 
     private Map<String, LightModule> modules = new HashMap<>();
     private final ArrayList<SubPlaceholder> subPlaceholders = new ArrayList<>();
@@ -171,7 +171,7 @@ public class Light extends JavaPlugin {
         this.lightRegen = new LightRegen();
         this.lightCollections = new LightCollections();
         this.lightCompactor = new LightCompactor();
-        this.lightProfiles = new LightProfiles();
+        this.lightProfiles = new LightFactory();
 
         this.modules.put(this.lightSkills.getName(), this.lightSkills);
         this.modules.put(this.lightRegen.getName(), this.lightRegen);

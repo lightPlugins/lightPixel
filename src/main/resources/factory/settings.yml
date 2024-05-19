@@ -1,0 +1,9 @@
+# The module language is used to determine the language of the module.
+module-language: en
+# These are the main categories for the factories. Case Sensitiv (subfolder must match these categories)
+categories:
+  - 'mining'
+  - 'farming'
+  - 'foraging'
+  - 'slayer'
+  - 'fishing'

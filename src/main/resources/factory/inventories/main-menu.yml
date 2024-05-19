@@ -1,0 +1,158 @@
+gui-title: '<yellow><bold>SkyFactory <gray>- <yellow>Menu'
+pattern:
+  - '000000000'
+  - '0000c0000'
+  - '000000000'
+  - '001234500'
+  - '000000000'
+  - '0d00a00b0'
+contents:
+  close:
+    args:
+      pattern-id: a
+      placeholders: [ ]
+      item: 'redstone 1 hide_attributes'
+      head-data: ''
+      display-name: '<red>Close'
+      lore: []
+      actions:
+        - 'close'
+  info:
+    args:
+      pattern-id: b
+      placeholders: [ ]
+      item: 'book 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>Information'
+      lore:
+        - '<gray>How does SkyFactory work?'
+        - ''
+        - '<yellow>TODO'
+      actions: [ ]
+  stats:
+    args:
+      pattern-id: c
+      placeholders: [ ]
+      item: 'nether_star 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>Overall Statistics'
+      lore:
+        - ''
+        - '<yellow>TODO'
+      actions: [ ]
+  booster:
+    args:
+      pattern-id: d
+      placeholders: [ ]
+      item: 'fire_charge 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>Global Booster'
+      lore:
+        - ''
+        - '<red>Currently disabled'
+      actions: [ ]
+  mining:
+    args:
+      pattern-id: 1
+      placeholders:
+        type: 'Mining'
+        percentage: '55'
+        progress-bar: '<yellow>------<gray>-----'
+        current: '55'
+        total: '100'
+      item: 'stone_pickaxe 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>#type# <gray>Factory'
+      lore:
+        - '<gray>Open your <yellow>#type# <gray>Factory'
+        - ''
+        - '<gray>Items Unlocked: <yellow>#percentage#<gold>%'
+        - '<gray>#progress-bar# <yellow>#current#<gold>/<yellow>#total#'
+        - ''
+        - '<yellow>Click to open factory!'
+      actions:
+        - 'open;mining'
+  farming:
+    args:
+      pattern-id: 2
+      placeholders:
+        type: 'Farming'
+        percentage: '55'
+        progress-bar: '<yellow>------<gray>-----'
+        current: '55'
+        total: '100'
+      item: 'stone_hoe 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>#type# <gray>Factory'
+      lore:
+        - '<gray>Open your <yellow>#type# <gray>Factory'
+        - ''
+        - '<gray>Items Unlocked: <yellow>#percentage#<gold>%'
+        - '<gray>#progress-bar# <yellow>#current#<gold>/<yellow>#total#'
+        - ''
+        - '<yellow>Click to open factory!'
+      actions:
+        - 'open;farming'
+  foraging:
+    args:
+      pattern-id: 3
+      placeholders:
+        type: 'Foraging'
+        percentage: '55'
+        progress-bar: '<yellow>------<gray>-----'
+        current: '55'
+        total: '100'
+      item: 'stone_axe 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>#type# <gray>Factory'
+      lore:
+        - '<gray>Open your <yellow>#type# <gray>Factory'
+        - ''
+        - '<gray>Items Unlocked: <yellow>#percentage#<gold>%'
+        - '<gray>#progress-bar# <yellow>#current#<gold>/<yellow>#total#'
+        - ''
+        - '<yellow>Click to open factory!'
+      actions:
+        - 'open;foraging'
+  slayer:
+    args:
+      pattern-id: 4
+      placeholders:
+        type: 'Slayer'
+        percentage: '55'
+        progress-bar: '<yellow>------<gray>-----'
+        current: '55'
+        total: '100'
+      item: 'stone_sword 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>#type# <gray>Factory'
+      lore:
+        - '<gray>Open your <yellow>#type# <gray>Factory'
+        - ''
+        - '<gray>Items Unlocked: <yellow>#percentage#<gold>%'
+        - '<gray>#progress-bar# <yellow>#current#<gold>/<yellow>#total#'
+        - ''
+        - '<yellow>Click to open factory!'
+      actions:
+        - 'open;slayer'
+  fishing:
+    args:
+      pattern-id: 5
+      placeholders:
+        type: 'Fishing'
+        percentage: '55'
+        progress-bar: '<yellow>------<gray>-----'
+        current: '55'
+        total: '100'
+      item: 'stone_fishing_rod 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>#type# <gray>Factory'
+      lore:
+        - '<gray>Open your <yellow>#type# <gray>Factory'
+        - ''
+        - '<gray>Items Unlocked: <yellow>#percentage#<gold>%'
+        - '<gray>#progress-bar# <yellow>#current#<gold>/<yellow>#total#'
+        - ''
+        - '<yellow>Click to open factory!'
+      actions:
+        - 'open;fishing'

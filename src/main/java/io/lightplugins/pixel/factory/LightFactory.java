@@ -1,26 +1,27 @@
-package io.lightplugins.pixel.profiles;
+package io.lightplugins.pixel.factory;
 
 import io.lightplugins.pixel.Light;
-import io.lightplugins.pixel.profiles.api.LightProfilesAPI;
-import io.lightplugins.pixel.profiles.config.MessageParams;
-import io.lightplugins.pixel.profiles.config.SettingParams;
-import io.lightplugins.pixel.profiles.models.Profile;
+import io.lightplugins.pixel.factory.api.LightFactoryAPI;
+import io.lightplugins.pixel.factory.commands.OpenFactoryCommand;
+import io.lightplugins.pixel.factory.config.MessageParams;
+import io.lightplugins.pixel.factory.config.SettingParams;
 import io.lightplugins.pixel.util.SubCommand;
 import io.lightplugins.pixel.util.interfaces.LightModule;
+import io.lightplugins.pixel.util.manager.CommandManager;
 import io.lightplugins.pixel.util.manager.FileManager;
+import org.bukkit.Bukkit;
+import org.bukkit.command.PluginCommand;
 
 import java.util.ArrayList;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
-public class LightProfiles implements LightModule {
+public class LightFactory implements LightModule {
 
 
-    public static LightProfiles instance;
-    public static LightProfilesAPI lightProfilesAPI;
+    public static LightFactory instance;
+    public static LightFactoryAPI lightProfilesAPI;
     public boolean isModuleEnabled = false;
 
-    public final String moduleName = "profiles";
+    public final String moduleName = "factory";
     public final String adminPerm = "light." + moduleName + ".admin";
     private final ArrayList<SubCommand> subCommands = new ArrayList<>();
 
@@ -31,12 +32,13 @@ public class LightProfiles implements LightModule {
 
     private FileManager settings;
     private FileManager language;
+    private FileManager mainMenu;
 
     @Override
     public void enable() {
 
         instance = this;
-        lightProfilesAPI = new LightProfilesAPI();
+        lightProfilesAPI = new LightFactoryAPI();
         initFiles();
         this.settingParams = new SettingParams(this);
         selectLanguage();
@@ -62,7 +64,8 @@ public class LightProfiles implements LightModule {
         selectLanguage();
         Light.getDebugPrinting().print(moduleName + "/language/" + settingParams.getModuleLanguage() + ".yml");
         getLanguage().reloadConfig(moduleName + "/language/" + settingParams.getModuleLanguage() + ".yml");
-
+        getMainMenu().reloadConfig(moduleName + "/main-menu.yml");
+        Light.getDebugPrinting().print("Successfully reloaded module " + moduleName);
     }
 
     @Override
@@ -78,6 +81,8 @@ public class LightProfiles implements LightModule {
     private void initFiles() {
         this.settings = new FileManager(
                 Light.instance, moduleName + "/settings.yml", true);
+        this.mainMenu = new FileManager(
+                Light.instance, moduleName + "/inventories/main-menu.yml", true);
     }
 
     private void selectLanguage() {
@@ -85,9 +90,9 @@ public class LightProfiles implements LightModule {
     }
 
     private void initSubCommands() {
-        //PluginCommand ecoCommand = Bukkit.getPluginCommand("skills");
-        //subCommands.add(new DummyCommand());
-        //new CommandManager(ecoCommand, subCommands);
+        PluginCommand factoryCommand = Bukkit.getPluginCommand("factory");
+        subCommands.add(new OpenFactoryCommand());
+        new CommandManager(factoryCommand, subCommands);
 
     }
 
@@ -106,4 +111,6 @@ public class LightProfiles implements LightModule {
     public FileManager getSettings() { return settings; }
 
     public FileManager getLanguage() { return language; }
+
+    public FileManager getMainMenu() { return mainMenu; }
 }

@@ -16,3 +16,6 @@ commands:
   collections:
     description: The command for collections
     aliases: [collect, coll]
+  factory:
+    description: The command for collections
+    aliases: [fc]

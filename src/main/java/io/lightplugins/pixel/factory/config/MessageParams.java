@@ -1,4 +1,4 @@
-package io.lightplugins.pixel.profiles.config;
+package io.lightplugins.pixel.factory.config;
 
 import io.lightplugins.pixel.util.manager.FileManager;
 import org.bukkit.configuration.file.FileConfiguration;

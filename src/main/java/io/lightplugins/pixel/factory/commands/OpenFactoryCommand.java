@@ -1,7 +1,7 @@
-package io.lightplugins.pixel.collections.commands;
+package io.lightplugins.pixel.factory.commands;
 
 import io.lightplugins.pixel.Light;
-import io.lightplugins.pixel.collections.inventories.OverviewInventory;
+import io.lightplugins.pixel.factory.inventories.FactoryInventory;
 import io.lightplugins.pixel.util.SubCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 
-public class OpenCollectionsCommand extends SubCommand {
+public class OpenFactoryCommand extends SubCommand {
     @Override
     public List<String> getName() {
         return List.of("open");
@@ -20,12 +20,12 @@ public class OpenCollectionsCommand extends SubCommand {
 
     @Override
     public String getDescription() {
-        return "Open the Collection GUI";
+        return "Open the SkyFactory GUI";
     }
 
     @Override
     public String getSyntax() {
-        return "/collections open";
+        return "/factory open";
     }
 
     @Override
@@ -35,7 +35,7 @@ public class OpenCollectionsCommand extends SubCommand {
 
     @Override
     public String getPermission() {
-        return "lightpixel.collections.gui.open";
+        return "lightpixel.factory.gui.factory";
     }
 
     @Override
@@ -57,8 +57,8 @@ public class OpenCollectionsCommand extends SubCommand {
     @Override
     public boolean performAsPlayer(Player player, String[] args) throws ExecutionException, InterruptedException {
 
-        OverviewInventory overviewInventory = new OverviewInventory(player);
-        overviewInventory.openInventory();
+        FactoryInventory factoryInventory = new FactoryInventory(player);
+        factoryInventory.openInventory();
 
         return false;
     }
