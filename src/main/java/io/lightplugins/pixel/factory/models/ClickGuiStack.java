@@ -139,6 +139,11 @@ public class ClickGuiStack {
 
             if(split.equalsIgnoreCase("hide_attributes")) {
                 itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                itemMeta.addItemFlags(ItemFlag.HIDE_ARMOR_TRIM);
+                itemMeta.addItemFlags(ItemFlag.HIDE_DYE);
+                itemMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+                itemMeta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+                itemMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
             }
         }
 

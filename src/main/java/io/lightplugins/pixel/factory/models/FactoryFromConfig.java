@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 
-public class Factory {
+public class FactoryFromConfig {
 
     private final FileConfiguration conf;
     private ConfigurationSection FACTORY_SECTION;
@@ -27,7 +27,7 @@ public class Factory {
     private Upgrades factoryUpgrades; // The upgrades for the factory
     private ItemStack genItemStack; // The itemstack of the item to generate;
 
-    public Factory(File file) {
+    public FactoryFromConfig(File file) {
 
         this.conf = YamlConfiguration.loadConfiguration(file);
 

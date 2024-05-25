@@ -1,7 +1,7 @@
 package io.lightplugins.pixel.factory.commands;
 
 import io.lightplugins.pixel.Light;
-import io.lightplugins.pixel.factory.inventories.FactoryInventory;
+import io.lightplugins.pixel.factory.inventories.MainInventory;
 import io.lightplugins.pixel.util.SubCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
@@ -57,7 +57,7 @@ public class OpenFactoryCommand extends SubCommand {
     @Override
     public boolean performAsPlayer(Player player, String[] args) throws ExecutionException, InterruptedException {
 
-        FactoryInventory factoryInventory = new FactoryInventory(player);
+        MainInventory factoryInventory = new MainInventory(player);
         factoryInventory.openInventory();
 
         return false;

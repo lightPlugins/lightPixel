@@ -1,0 +1,129 @@
+gui-title: '<yellow><bold>SkyFactory <reset><gray>- <yellow>#factoryID#'
+pattern:
+  - '000000000'
+  - '0000g00h0'
+  - '0000000i0'
+  - '0d0ef00j0'
+  - '0000000k0'
+  - 'c0b0a0000'
+background-items: true
+contents:
+  back:
+    args:
+      pattern-id: a
+      placeholders: [ ]
+      item: 'arrow 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>Back'
+      lore: [ ]
+      actions:
+        - 'open;category'
+  close:
+    args:
+      pattern-id: b
+      placeholders: [ ]
+      item: 'redstone 1 hide_attributes'
+      head-data: ''
+      display-name: '<red>Close'
+      lore: [ ]
+      actions:
+        - 'close'
+  info:
+    args:
+      pattern-id: c
+      placeholders: [ ]
+      item: 'book 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>Information'
+      lore:
+        - '<gray>How does SkyFactory work?'
+        - ''
+        - '<yellow>TODO'
+      actions: [ ]
+  milestone:
+    args:
+      pattern-id: d
+      placeholders: [ ]
+      item: 'nether_star 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>Milestones'
+      lore: [ ]
+      actions:
+        - 'open;milestones'
+  cash-out-amount:
+    args:
+      pattern-id: e
+      placeholders: [ ]
+      item: 'oak_sign 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>Cash out x amount'
+      lore: [ ]
+      actions:
+        - 'cashout;signinput'
+  cash-out-all:
+    args:
+      pattern-id: f
+      placeholders: [ ]
+      item: 'chest 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>Fill Inventory'
+      lore: [ ]
+      actions:
+        - 'cashout;inventory'
+  overview:
+    args:
+      pattern-id: g
+      placeholders: [ ]
+      item: '#item-to-gen# 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>Overview:'
+      lore:
+        - '<grey>Amount: <yellow>#amount#'
+        - '<grey>Item per second: <yellow>#item-per-second#'
+        - '<grey>Alltime: <yellow>#all-time#'
+      actions:
+        - 'cashout;inventory'
+  upgrade-speed:
+    args:
+      pattern-id: h
+      placeholders: [ ]
+      item: 'wayfinder_armor_trim_smithing_template 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>Speed #level#'
+      lore:
+        - '<yellow>TODO'
+      actions:
+        - 'upgrade;speed'
+  upgrade-fortune:
+    args:
+      pattern-id: i
+      placeholders: [ ]
+      item: 'raiser_armor_trim_smithing_template 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>Fortune #level#'
+      lore:
+        - '<yellow>TODO'
+      actions:
+        - 'upgrade;fortune'
+  upgrade-efficiency:
+    args:
+      pattern-id: j
+      placeholders: [ ]
+      item: 'shaper_armor_trim_smithing_template 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>Efficiency #level#'
+      lore:
+        - '<yellow>TODO'
+      actions:
+        - 'upgrade;efficiency'
+  upgrade-capacity:
+    args:
+      pattern-id: k
+      placeholders: [ ]
+      item: 'host_armor_trim_smithing_template 1 hide_attributes'
+      head-data: ''
+      display-name: '<yellow>Capacity #level#'
+      lore:
+        - '<yellow>TODO'
+      actions:
+        - 'upgrade;capacity'

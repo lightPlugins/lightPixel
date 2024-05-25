@@ -1,8 +1,10 @@
 package io.lightplugins.pixel.util.interfaces;
 
+import java.io.IOException;
+
 public interface LightModule {
 
-    void enable();
+    void enable() throws IOException;
 
     void disable();
 

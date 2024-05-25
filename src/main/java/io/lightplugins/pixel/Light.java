@@ -24,6 +24,7 @@ import io.lightplugins.pixel.util.interfaces.LightModule;
 import io.lightplugins.pixel.util.manager.FileManager;
 import io.lightplugins.pixel.util.manager.MultiFileManager;
 import io.lightplugins.pixel.util.manager.PlaceholderManager;
+import lombok.SneakyThrows;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -154,8 +155,13 @@ public class Light extends JavaPlugin {
         }
         debugPrinting.print("Module §e" + lightModule.getName() + "§r is" +
                 (enable ? "§a activated" : "§c deactivated"));
-        if(enable) { lightModule.enable();  }
-
+        if(enable) {
+            try {
+                lightModule.enable();
+            } catch (IOException e) {
+                throw new RuntimeException("Error while initalize module " + lightModule.getName(), e);
+            }
+        }
     }
 
     private void unloadModule(LightModule lightModule) {

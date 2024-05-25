@@ -1,0 +1,23 @@
+data:
+  globalBoost:
+    speed: 1
+    fortune: 1
+    efficiency: 1
+playerdata:
+  'LightningDesign':  # UUID instead of name
+    'cobblestone':
+      all-time: 988445
+      storage: 6554
+      speed: 1
+      fortune: 3
+      capacity: 2
+      efficiency: 2
+      milestone: 4
+    'stone':
+      all-time: 988445
+      storage: 6554
+      speed: 1
+      fortune: 3
+      capacity: 2
+      efficiency: 2
+      milestone: 4

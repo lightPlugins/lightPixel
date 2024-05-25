@@ -1,4 +1,4 @@
-gui-title: '<yellow><bold>SkyFactory <gray>- <yellow>Menu'
+gui-title: '<yellow><bold>SkyFactory <reset><gray>- <yellow>Menu'
 pattern:
   - '000000000'
   - '0000c0000'
@@ -6,6 +6,7 @@ pattern:
   - '001234500'
   - '000000000'
   - '0d00a00b0'
+background-items: true
 contents:
   close:
     args:
@@ -144,7 +145,7 @@ contents:
         progress-bar: '<yellow>------<gray>-----'
         current: '55'
         total: '100'
-      item: 'stone_fishing_rod 1 hide_attributes'
+      item: 'fishing_rod 1 hide_attributes'
       head-data: ''
       display-name: '<yellow>#type# <gray>Factory'
       lore:
